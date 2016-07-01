@@ -2,17 +2,17 @@ package org.klose.payment.application;
 
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 
-@RestController
-@EnableAutoConfiguration
-public class Application {
+@SpringBootApplication
+public class Application extends SpringBootServletInitializer {
 
-    @RequestMapping("/")
-    String home() {
-        return "Hello World!";
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
     }
 
     public static void main(String[] args) throws Exception {
