@@ -21,7 +21,7 @@ public interface TransactionDao extends CrudRepository<TransactionPO, Long> {
 	@Query("SELECT m FROM #{#entityName} m WHERE m.transactionNo=:orderNo")
 	List<TransactionPO> findByOrderNoOnLock(@Param("orderNo") String orderNo);
 	
-	@Query("SELECT trans.returnURL FROM com.ebao.insurance.paymentservice.po.TransactionPO trans" +
+	@Query("SELECT trans.returnURL FROM #{#entityName} trans" +
 				 " WHERE trans.id=:transactionId")
 	String findReturnURLById(@Param("transactionId") Long transactionId);
 	
