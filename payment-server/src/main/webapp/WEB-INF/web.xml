@@ -1,30 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app id="WebApp_ID" version="2.4"
+         xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <display-name>payment gateway</display-name>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>org.klose.payment.application.Application</param-value>
+        <param-value>classpath:spring-beans.xml</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>contextInitializerClasses</param-name>
+        <param-value></param-value>
+    </context-param>
+
+
+    <!-- RESTEasy configuration -->
     <listener>
-        <listener-class>org.springframework.boot.legacy.context.web.SpringBootContextLoaderListener</listener-class>
+        <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
     </listener>
-    
+
+    <!-- RESTEasy <-> Spring connector (RESTEasy can access Spring beans) -->
+    <listener>
+        <!-- org.springframework.web.context.ContextLoaderListener -->
+        <listener-class>org.jboss.resteasy.plugins.spring.SpringContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- RESTEasy HTTP Request processor -->
+    <context-param>
+        <param-name>resteasy.servlet.mapping.prefix</param-name>
+        <param-value>/api</param-value>
+    </context-param>
+
     <servlet>
-        <servlet-name>appServlet</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextAttribute</param-name>
-            <param-value>org.springframework.web.context.WebApplicationContext.ROOT</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
+        <servlet-name>restservlet</servlet-name>
+        <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>appServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <servlet-name>restservlet</servlet-name>
+        <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 
 </web-app>
