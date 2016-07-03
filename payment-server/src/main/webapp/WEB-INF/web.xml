@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>payment gateway</display-name>
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>testPay.jsp</welcome-file>
     </welcome-file-list>
     <session-config>
         <session-timeout>60</session-timeout>
@@ -17,7 +17,7 @@
 
     <context-param>
         <param-name>contextInitializerClasses</param-name>
-        <param-value></param-value>
+        <param-value>org.klose.payment.server.context.ContextInitializer</param-value>
     </context-param>
 
 
