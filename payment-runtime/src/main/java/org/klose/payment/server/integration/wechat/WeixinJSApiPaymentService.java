@@ -2,7 +2,7 @@ package org.klose.payment.server.integration.wechat;
 
 
 import org.klose.payment.server.bo.BillingData;
-import org.klose.payment.server.bo.ForwardViewData;
+import org.klose.payment.server.bo.PaymentForm;
 import org.klose.payment.server.common.utils.Assert;
 import org.klose.payment.server.common.utils.JSONHelper;
 import org.klose.payment.server.constant.FrontPageForwardType;
@@ -37,7 +37,7 @@ public class WeixinJSApiPaymentService implements EbaoPaymentService {
 	TransactionDataService transactionService;
 
 	@Override
-	public ForwardViewData generatePaymentData(BillingData bill)
+	public PaymentForm generatePaymentData(BillingData bill)
 			throws Exception {
 		WechatPrepayData prepayData = convertBillingData(bill);
 
@@ -50,7 +50,7 @@ public class WeixinJSApiPaymentService implements EbaoPaymentService {
 		extData.put(PaymentConstant.KEY_WEIXIN_PREPAY_ID,
 				prepayResponse.getPrepay_id());
 
-		ForwardViewData result = generateForwardViewData(prepayResponse);
+		PaymentForm result = generateForwardViewData(prepayResponse);
 
 		result.setTransactionId(transactionService
 				.createTransactionFromBillingData(bill));
@@ -76,7 +76,7 @@ public class WeixinJSApiPaymentService implements EbaoPaymentService {
 		result.setProductName(bill.getSubject());
 		result.setTotal_fee(bill.getPrice().multiply(
 				new BigDecimal(bill.getQuantity())));
-		result.setTradeType(PaymentConstant.WEIXIN_TRADETYPE_JSAPI); 
+		result.setTradeType(PaymentConstant.WEIXIN_TRADETYPE_JSAPI);
 		result.setProductId((String) (extData
 				.get(PaymentConstant.KEY_WEIXIN_PRODUCT_ID)));
 
@@ -91,7 +91,7 @@ public class WeixinJSApiPaymentService implements EbaoPaymentService {
 		return result;
 	}
 
-	private ForwardViewData generateForwardViewData(
+	private PaymentForm generateForwardViewData(
 			WechatPrepayResponseDto prepayResponse) {
 
 		String nonceStr = ValidateCode.randomCode(10);
@@ -113,7 +113,7 @@ public class WeixinJSApiPaymentService implements EbaoPaymentService {
 		PayDtoResult.put("signType", payDto.getSignType());
 		PayDtoResult.put("paySign", payDto.getPaySign());
 
-		ForwardViewData viewData = new ForwardViewData();
+		PaymentForm viewData = new PaymentForm();
 
 		viewData.setForwardType(FrontPageForwardType.WEIXIN_JS);
 		viewData.setForwardURL(PaymentConstant.WEIXIN_JSAPI_FORWARD_URL);

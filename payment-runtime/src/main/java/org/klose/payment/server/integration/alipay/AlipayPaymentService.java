@@ -2,7 +2,7 @@ package org.klose.payment.server.integration.alipay;
 
 
 import org.klose.payment.server.bo.BillingData;
-import org.klose.payment.server.bo.ForwardViewData;
+import org.klose.payment.server.bo.PaymentForm;
 import org.klose.payment.server.common.utils.Assert;
 import org.klose.payment.server.constant.FrontPageForwardType;
 import org.klose.payment.server.constant.PaymentConstant;
@@ -37,7 +37,7 @@ public class AlipayPaymentService implements EbaoPaymentService {
 	final static String SERVICE_ALIPAY_WAP_GATEWAY = "alipay.wap.create.direct.pay.by.user";
 
 	@Override
-	public ForwardViewData generatePaymentData(BillingData bill)
+	public PaymentForm generatePaymentData(BillingData bill)
 			throws Exception {
 		Assert.isNotNull(bill, "billing data cannot be null");
 		logger.info("start generate alipay forward view data");
@@ -55,7 +55,7 @@ public class AlipayPaymentService implements EbaoPaymentService {
 		Long transId = transactionService
 				.createTransactionFromBillingData(bill);
 
-		ForwardViewData result = generateForwardViewData(vo, transId);
+		PaymentForm result = generateForwardViewData(vo, transId);
 		Assert.isNotNull(result);
 
 		logger.debug("forwared view data [result : {}]", result);
@@ -89,8 +89,8 @@ public class AlipayPaymentService implements EbaoPaymentService {
 		return vo;
 	}
 
-	private ForwardViewData generateForwardViewData(AlipayOrderVO orderVO,
-			Long transId) throws Exception {
+	private PaymentForm generateForwardViewData(AlipayOrderVO orderVO,
+												Long transId) throws Exception {
 		Assert.isNotNull(orderVO);
 		logger.trace("generate forward view date [orderVO : {}]", orderVO);
 
@@ -147,7 +147,7 @@ public class AlipayPaymentService implements EbaoPaymentService {
 
 		logger.trace("built parameter map : {}",
 				AlipayHelper.getMapContent(params));
-		ForwardViewData viewData = new ForwardViewData();
+		PaymentForm viewData = new PaymentForm();
 
 		viewData.setForwardType(FrontPageForwardType.POST);
 		viewData.setForwardURL(PaymentConstant.GENERAL_POST_FORM_FORWARD_URL);

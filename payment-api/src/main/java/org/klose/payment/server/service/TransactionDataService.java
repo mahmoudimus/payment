@@ -16,6 +16,6 @@ public interface TransactionDataService {
 
     PaymentResult findSuccessfulPaymentByBizNo(String bizNo);
 
-    public void updatePaymentResult(
+    void updatePaymentResult(
             Long transId, boolean isSuccess, String payId, String notifyMsg);
 }
