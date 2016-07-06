@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ForwardViewData implements Serializable {
+public class PaymentForm implements Serializable {
 
 	/**
 	 * 
@@ -84,7 +84,7 @@ public class ForwardViewData implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ForwardViewData [transactionId=" + transactionId
+		return "PaymentForm [transactionId=" + transactionId
 				+ ", forwardType=" + forwardType + ", forwardURL=" + forwardURL
 				+ ", returnURL=" + returnURL + ", endPoint=" + endPoint + ", params=" + params + "]";
 	}

@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.klose.payment.server.bo.BillingData;
-import org.klose.payment.server.bo.ForwardViewData;
+import org.klose.payment.server.bo.PaymentForm;
 import org.klose.payment.server.service.EbaoPaymentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +52,7 @@ public class AlipayPaymentServiceTest {
 	public void test() throws Exception {
 		Assert.assertNotNull(service);
 		Assert.assertNotNull(data);
-		ForwardViewData view = service.generatePaymentData(data);
+		PaymentForm view = service.generatePaymentData(data);
 		Assert.assertNotNull(view);
 		Assert.assertNotNull(view.getTransactionId());
 		logger.info("view url " + view.getForwardURL() + " view forward Type "

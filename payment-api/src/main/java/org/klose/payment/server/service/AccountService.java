@@ -9,12 +9,12 @@ import java.util.List;
 
 public interface AccountService {
 	
-	public List<AccountInfo> getAccountsByPaymentType(PaymentType type);
+	List<AccountInfo> getAccountsByPaymentType(PaymentType type);
 	
-	public AccountInfo getAccountbyNo(String accountNo);
+	AccountInfo getAccountbyNo(String accountNo);
 	
-	public String getProcessBeanByNo(String accountNo);
+	String getProcessBeanByNo(String accountNo);
 	
-	public boolean isAccountUnderTesting(String accountNo);
+	boolean isAccountUnderTesting(String accountNo);
 	
 }

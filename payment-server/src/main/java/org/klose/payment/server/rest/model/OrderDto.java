@@ -2,7 +2,7 @@ package org.klose.payment.server.rest.model;
 
 import javax.ws.rs.FormParam;
 
-public class PaymentDto {
+public class OrderDto {
 	public static enum bizType {
 		NB
 	};
@@ -50,7 +50,7 @@ public class PaymentDto {
 
 	@Override
 	public String toString() {
-		return "PaymentDto [accountNo=" + accountNo + ", bizNo=" + bizNo
+		return "OrderDto [accountNo=" + accountNo + ", bizNo=" + bizNo
 				+ ", bizType=" + bizType + ", returnURL=" + returnURL + "]";
 	}
 

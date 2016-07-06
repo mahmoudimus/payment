@@ -8,180 +8,198 @@ import java.util.Map;
 
 public class BillingData implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7114949567821930581L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 7114949567821930581L;
 
-	private String accountNo;
+    private String accountNo;
 
-	private Integer accountType;
+    private Integer accountType;
 
-	// pass by business module
-	private String bizNo;
-	private String bizType;
+    // pass by business module
+    private String bizNo;
+    private String bizType;
 
-	// created by payment module
-	private String orderNo;
+    // created by payment module
+    private String orderNo;
 
-	private String subject;
+    private String subject;
 
-	private String description;
+    private String description;
 
-	private String currency;
+    private String currency;
 
-	private BigDecimal price;
+    private BigDecimal price;
 
-	private int quantity = 1;
+    private int quantity = 1;
 
-	private String hostEndpoint;
+    private String hostEndpoint;
 
-	private String returnURL;
+    private String returnURL;
 
-	private String callBackAgent;
-	
-	private Date businessEffectiveDate;
+    private String prepareService;
+    private String callBackAgent;
 
-	private Map<String, Object> extData;
+    private Date businessEffectiveDate;
 
-	public String getAccountNo() {
-		return accountNo;
-	}
+    private Map<String, Object> extData;
 
-	public void setAccountNo(String accountNo) {
-		this.accountNo = accountNo;
-	}
+    public String getAccountNo() {
+        return accountNo;
+    }
 
-	public Integer getAccountType() {
-		return accountType;
-	}
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
+    }
 
-	public void setAccountType(Integer accountType) {
-		this.accountType = accountType;
-	}
+    public Integer getAccountType() {
+        return accountType;
+    }
 
-	public String getBizType() {
-		return bizType;
-	}
+    public void setAccountType(Integer accountType) {
+        this.accountType = accountType;
+    }
 
-	public void setBizType(String bizType) {
-		this.bizType = bizType;
-	}
+    public String getBizType() {
+        return bizType;
+    }
 
-	public String getBizNo() {
-		return bizNo;
-	}
+    public void setBizType(String bizType) {
+        this.bizType = bizType;
+    }
 
-	public void setBizNo(String bizNo) {
-		this.bizNo = bizNo;
-	}
+    public String getBizNo() {
+        return bizNo;
+    }
 
-	public String getOrderNo() {
-		return orderNo;
-	}
+    public void setBizNo(String bizNo) {
+        this.bizNo = bizNo;
+    }
 
-	public void setOrderNo(String orderNo) {
-		this.orderNo = orderNo;
-	}
+    public String getOrderNo() {
+        return orderNo;
+    }
 
-	public String getSubject() {
-		return subject;
-	}
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public BigDecimal getPrice() {
-		return price;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
+    public BigDecimal getPrice() {
+        return price;
+    }
 
-	public int getQuantity() {
-		return quantity;
-	}
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+    public int getQuantity() {
+        return quantity;
+    }
 
-	public String getCurrency() {
-		return currency;
-	}
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
+    public String getCurrency() {
+        return currency;
+    }
 
-	public String getHostEndpoint() {
-		return hostEndpoint;
-	}
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 
-	public void setHostEndpoint(String hostEndpoint) {
-		this.hostEndpoint = hostEndpoint;
-	}
+    public String getHostEndpoint() {
+        return hostEndpoint;
+    }
 
-	public String getReturnURL() {
-		return returnURL;
-	}
+    public void setHostEndpoint(String hostEndpoint) {
+        this.hostEndpoint = hostEndpoint;
+    }
 
-	public void setReturnURL(String returnURL) {
-		this.returnURL = returnURL;
-	}
+    public String getReturnURL() {
+        return returnURL;
+    }
 
-	public String getCallBackAgent() {
-		return callBackAgent;
-	}
+    public void setReturnURL(String returnURL) {
+        this.returnURL = returnURL;
+    }
 
-	public void setCallBackAgent(String callBackAgent) {
-		this.callBackAgent = callBackAgent;
-	}
+    public String getCallBackAgent() {
+        return callBackAgent;
+    }
 
-	public Date getBusinessEffectiveDate() {
-		return businessEffectiveDate;
-	}
+    public void setCallBackAgent(String callBackAgent) {
+        this.callBackAgent = callBackAgent;
+    }
 
-	public void setBusinessEffectiveDate(Date businessEffectiveDate) {
-		this.businessEffectiveDate = businessEffectiveDate;
-	}
+    public Date getBusinessEffectiveDate() {
+        return businessEffectiveDate;
+    }
 
-	public Map<String, Object> getExtData() {
-		return extData;
-	}
+    public void setBusinessEffectiveDate(Date businessEffectiveDate) {
+        this.businessEffectiveDate = businessEffectiveDate;
+    }
 
-	public void setExtData(Map<String, Object> extData) {
-		this.extData = extData;
-	}
+    public Map<String, Object> getExtData() {
+        return extData;
+    }
 
-	public void addExtData(String key, Object value) {
-		if (this.extData == null) {
-			this.extData = new HashMap<String, Object>();
-		}
+    public String getPrepareService() {
+        return prepareService;
+    }
 
-		this.extData.put(key, value);
-	}
+    public void setPrepareService(String prepareService) {
+        this.prepareService = prepareService;
+    }
 
-	@Override
-	public String toString() {
-		return "BillingData [accountNo=" + accountNo + ", accountType="
-				+ accountType + ", bizNo=" + bizNo + ", bizType=" + bizType
-				+ ", orderNo=" + orderNo + ", subject=" + subject
-				+ ", description=" + description + ", currency=" + currency
-				+ ", price=" + price + ", quantity=" + quantity
-				+ ", hostEndpoint=" + hostEndpoint + ", returnURL=" + returnURL
-				+ ", callBackAgent=" + callBackAgent + ", extData=" + extData
-				+ "]";
-	}
+    public void setExtData(Map<String, Object> extData) {
+        this.extData = extData;
+    }
 
+    public void addExtData(String key, Object value) {
+        if (this.extData == null) {
+            this.extData = new HashMap<String, Object>();
+        }
+
+        this.extData.put(key, value);
+    }
+
+    @Override
+    public String toString() {
+        return "BillingData{" +
+                "accountNo='" + accountNo + '\'' +
+                ", accountType=" + accountType +
+                ", bizNo='" + bizNo + '\'' +
+                ", bizType='" + bizType + '\'' +
+                ", orderNo='" + orderNo + '\'' +
+                ", subject='" + subject + '\'' +
+                ", description='" + description + '\'' +
+                ", currency='" + currency + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", hostEndpoint='" + hostEndpoint + '\'' +
+                ", returnURL='" + returnURL + '\'' +
+                ", prepareService='" + prepareService + '\'' +
+                ", callBackAgent='" + callBackAgent + '\'' +
+                ", businessEffectiveDate=" + businessEffectiveDate +
+                ", extData=" + extData +
+                '}';
+    }
 }

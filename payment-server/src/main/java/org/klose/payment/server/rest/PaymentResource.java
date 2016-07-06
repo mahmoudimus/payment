@@ -1,5 +1,6 @@
 package org.klose.payment.server.rest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jboss.resteasy.annotations.Form;
 import org.jboss.resteasy.plugins.providers.html.View;
 import org.klose.payment.server.api.PaymentProxy;
@@ -8,9 +9,7 @@ import org.klose.payment.server.common.context.ApplicationContextUtils;
 import org.klose.payment.server.common.utils.Assert;
 import org.klose.payment.server.common.utils.http.HttpUtils;
 import org.klose.payment.server.constant.FrontPageForwardType;
-import org.klose.payment.server.constant.PaymentConstant;
-import org.klose.payment.server.constant.PaymentType;
-import org.klose.payment.server.rest.model.PaymentDto;
+import org.klose.payment.server.rest.model.OrderDto;
 import org.klose.payment.server.service.PaymentExtensionConfService;
 import org.klose.payment.server.service.PaymentIntegrationService;
 import org.slf4j.Logger;
@@ -25,7 +24,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 
-@Path("payment/")
+@Path("/payment")
 @Component
 public class PaymentResource {
 
@@ -39,7 +38,7 @@ public class PaymentResource {
 
 
     @GET
-    @Path("/payment/{transactionId}")
+    @Path("/{transactionId}")
     @Produces(MediaType.APPLICATION_JSON)
     public PaymentResult queryPayment(@Context HttpServletResponse response,
                                       @Context HttpServletRequest request,
@@ -49,47 +48,67 @@ public class PaymentResource {
         return paymentResult;
     }
 
+    /**
+     * 1. from order generate billing
+     * 2. from billing generate payment form
+     * 3. send/redirect payment form
+     *
+     * @param response
+     * @param request
+     * @param orderDto
+     * @return
+     */
     @POST
-    @Path("/createPayment")
+    @Path("/create")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces("text/html")
     public View createPayment(@Context HttpServletResponse response,
-                              @Context HttpServletRequest request, @Form PaymentDto paymentDto) {
-        final String DEFAULT_PREPAREBILLDATA_BEAN = "mockPaymentIntegtationService";
-
-        final String DEFAULT_CALLBACKAGENT_BEAN = "mockCallbackService";
-
-        Assert.isNotNull(paymentDto, "payment form is empty");
-        Assert.isNotNull(paymentDto.getAccountNo(),
-                "account no can not be null");
-        Assert.isNotNull(paymentDto.getBizType(), "bizType can not be null");
-        Assert.isNotNull(paymentDto.getBizNo(), "bizNo can not be null");
-
+                              @Context HttpServletRequest request, @Form OrderDto orderDto) {
+        Assert.isNotNull(orderDto);
+        Assert.isNotNull(orderDto.getAccountNo());
+        Assert.isNotNull(orderDto.getBizType());
+        Assert.isNotNull(orderDto.getBizNo());
         logger.info("start create payment");
-        logger.debug("[payment form : {}]", paymentDto);
+        logger.debug("[payment form : {}]", orderDto);
 
-        AccountInfo accountInfo = paymentProxy.getAccountbyNo(paymentDto
+        BillingData billing = this.prepareBilling(request, orderDto);
+        PaymentForm paymentForm = this.generatePaymenetFormData(billing);
+        Assert.isNotNull(paymentForm);
+        Assert.isNotNull(paymentForm.getForwardType());
+
+        PaymentIntegrationService paymentIntegrationService = ApplicationContextUtils
+                .getBean(billing.getPrepareService(), PaymentIntegrationService.class);
+        paymentIntegrationService.saveTransactionId(
+                orderDto.getBizNo(), paymentForm.getTransactionId());
+
+
+        if (FrontPageForwardType.REDIRECT.equals(paymentForm.getForwardType())) {
+            redirectPaymentForm(response, paymentForm.getForwardURL());
+            return null;
+        } else
+            return this.createPaymentView(paymentForm);
+    }
+
+    private BillingData prepareBilling(HttpServletRequest request, OrderDto orderDto) {
+        // init account info
+        AccountInfo accountInfo = paymentProxy.getAccountbyNo(orderDto
                 .getAccountNo());
-        Assert.isNotNull(accountInfo, "account info can not be null");
-        Assert.isNotNull(accountInfo.getType(),
-                "account payment type can not be null");
-        Integer accountType = accountInfo.getType().getTypeId();
-
-        String callbackAgentBean = null;
-        String prepareBillDataBean = null;
+        Assert.isNotNull(accountInfo);
+        Assert.isNotNull(accountInfo.getType());
 
         PaymentExtensionConf conf = paymentExtensionService
-                .getPaymentExtensionByBizTypeAndAccountType(accountType,
-                        paymentDto.getBizType());
+                .getPaymentExtensionByBizTypeAndAccountType(
+                        accountInfo.getType().getTypeId(),
+                        orderDto.getBizType());
 
         logger.trace("payment extension conf = {} ", conf);
-        if (null == conf) {
-            prepareBillDataBean = DEFAULT_PREPAREBILLDATA_BEAN;
-            callbackAgentBean = DEFAULT_CALLBACKAGENT_BEAN;
-        } else {
-            prepareBillDataBean = conf.getPrepareBillingDataBean();
-            callbackAgentBean = conf.getProcessPaymentCallbackBean();
-        }
+
+        final String DEFAULT_PREPARE_BEAN = "mockPaymentIntegtationService";
+        final String DEFAULT_CALLBACK_BEAN = "mockCallbackService";
+        String prepareBillDataBean = (conf != null && StringUtils.isEmpty(conf.getPrepareBillingDataBean())) ?
+                conf.getPrepareBillingDataBean() : DEFAULT_PREPARE_BEAN;
+        String callbackAgentBean = (conf != null && StringUtils.isEmpty(conf.getProcessPaymentCallbackBean())) ?
+                conf.getProcessPaymentCallbackBean() : DEFAULT_CALLBACK_BEAN;
 
         PaymentIntegrationService paymentIntegrationService = ApplicationContextUtils
                 .getBean(prepareBillDataBean, PaymentIntegrationService.class);
@@ -97,22 +116,25 @@ public class PaymentResource {
                 "payment integration can not be inititalized by spring");
 
         BillingData data = paymentIntegrationService
-                .prepareBillingData(paymentDto.getBizNo());
-        data.setAccountNo(paymentDto.getAccountNo());
-        data.setAccountType(accountType);
-        data.setBizType(paymentDto.getBizType());
-        data.setReturnURL(paymentDto.getReturnURL());
+                .prepareBillingData(orderDto.getBizNo());
+        data.setAccountNo(orderDto.getAccountNo());
+        data.setAccountType(accountInfo.getType().getTypeId());
+        data.setBizType(orderDto.getBizType());
+        data.setReturnURL(orderDto.getReturnURL());
+        data.setPrepareService(prepareBillDataBean);
         data.setCallBackAgent(callbackAgentBean);
+        // relative path support
         data.setHostEndpoint(HttpUtils.getServletRootUrl(request));
 
-        if (accountType.equals(PaymentType.WX_JSAPI.getTypeId())) {
-            // special handle for we chat;
-            if (request.getAttribute(PaymentConstant.KEY_WEIXIN_OPENID) != null)
-                data.addExtData(PaymentConstant.KEY_WEIXIN_OPENID,
-                        request.getAttribute(PaymentConstant.KEY_WEIXIN_OPENID));
-        }
+        logger.debug("prepared billing data : \n {}", data);
+        return data;
+    }
 
-        ForwardViewData viewData;
+    private PaymentForm generatePaymenetFormData(BillingData data) {
+        Assert.isNotNull(data);
+        logger.debug("[billingdata : {}", data);
+
+        PaymentForm viewData;
         try {
             viewData = paymentProxy.createPayment(data);
         } catch (Exception ex) {
@@ -120,35 +142,39 @@ public class PaymentResource {
             throw new RuntimeException(ex.getMessage());
         }
 
-        Assert.isNotNull(viewData, "ForwardViewData is null");
-
+        Assert.isNotNull(viewData, "PaymentForm is null");
         logger.debug("[forward view data : {}]", viewData);
 
-        paymentIntegrationService.saveTransactionId(
-                paymentDto.getBizNo(), viewData.getTransactionId());
+        return viewData;
+    }
 
-        if (FrontPageForwardType.REDIRECT.equals(viewData.getForwardType())) {
-            try {
-                response.sendRedirect(viewData.getForwardURL());
-                return null;
-            } catch (IOException ioEx) {
-                throw new RuntimeException("redirect url fail. url="
-                        + viewData.getForwardURL(), ioEx);
-            }
-        } else {
-
-
-            View view = new View(viewData.getForwardURL());
-
-            view.getModelMap().put("model", viewData.getParams());
-            view.getModelMap().put("returnURL", viewData.getReturnURL());
-            if (null != viewData.getEndPoint()) {
-                view.getModelMap().put(PaymentConstant.KEY_PAYMENT_ENDPOINT,
-                        viewData.getEndPoint());
-            }
-
-            return view;
+    private void redirectPaymentForm(HttpServletResponse response, String redirectUrl) {
+        Assert.isNotNull(response);
+        Assert.isNotNull(redirectUrl);
+        try {
+            response.sendRedirect(redirectUrl);
+        } catch (IOException ioEx) {
+            logger.error("{} exception error occurs by redirect {}",
+                    ioEx.getMessage(), redirectUrl);
+            throw new RuntimeException("redirect url fail. url="
+                    + redirectUrl, ioEx);
         }
     }
 
+    private View createPaymentView(PaymentForm paymentForm) {
+        Assert.isNotNull(paymentForm);
+        Assert.isNotNull(paymentForm.getForwardURL());
+        Assert.isNotNull(paymentForm.getParams());
+        Assert.isNotNull(paymentForm.getReturnURL());
+
+        logger.debug("forward view data : {} \n", paymentForm);
+
+        View view = new View(paymentForm.getForwardURL());
+        //@TODO rename
+        view.getModelMap().put("model", paymentForm.getParams());
+        view.getModelMap().put("returnURL", paymentForm.getReturnURL());
+
+        logger.debug("payment view data : {} \n", view);
+        return view;
+    }
 }

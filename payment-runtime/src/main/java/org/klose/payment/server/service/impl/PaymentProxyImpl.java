@@ -4,7 +4,7 @@ package org.klose.payment.server.service.impl;
 import org.klose.payment.server.api.PaymentProxy;
 import org.klose.payment.server.bo.AccountInfo;
 import org.klose.payment.server.bo.BillingData;
-import org.klose.payment.server.bo.ForwardViewData;
+import org.klose.payment.server.bo.PaymentForm;
 import org.klose.payment.server.bo.PaymentResult;
 import org.klose.payment.server.common.context.ApplicationContextUtils;
 import org.klose.payment.server.constant.FrontPageForwardType;
@@ -33,7 +33,7 @@ public class PaymentProxyImpl implements PaymentProxy {
 	final static String ERR_MSG_PAYMENT_PAID = "该笔订单已支付完成！ 请勿重复支付！";
 	
 	@Override
-	public ForwardViewData createPayment(BillingData bill) throws Exception {
+	public PaymentForm createPayment(BillingData bill) throws Exception {
 		
 		String bizNo = bill.getBizNo();
 		PaymentResult successfulPayment =
@@ -47,7 +47,7 @@ public class PaymentProxyImpl implements PaymentProxy {
 				throw new RuntimeException(ERR_MSG_PAYMENT_PAID);
 			}
 			
-			ForwardViewData result = new ForwardViewData();
+			PaymentForm result = new PaymentForm();
 			result.setForwardType(FrontPageForwardType.REDIRECT);
 			result.setForwardURL(forwardURL);
 			
@@ -69,7 +69,7 @@ public class PaymentProxyImpl implements PaymentProxy {
 						ApplicationContextUtils.getBean(procerssBeanName,	EbaoPaymentService.class);
 				
 				if(paymentService != null){
-					ForwardViewData result = paymentService.generatePaymentData(bill);
+					PaymentForm result = paymentService.generatePaymentData(bill);
 					result.setReturnURL(
 							transactionService.processReturnURL(
 									result.getTransactionId(), bill.getReturnURL()));						
