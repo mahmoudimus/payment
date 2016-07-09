@@ -117,7 +117,7 @@ public class AlipayPaymentService implements EbaoPaymentService {
 		params.put("partner", config.getPartner());
 		params.put("payment_type", "1");
 		String notificationURL = orderVO.getContextUrl()
-				+ "/api/paymentservice/alipay/notifications";
+				+ "/api/payment/alipay/notifications";
 		params.put("notify_url", notificationURL);
 
 		// only for test

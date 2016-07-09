@@ -27,38 +27,14 @@ public class PaymentConstant {
 	public final static String KEY_WEIXIN_MCH_ID = "mchID";
 	
 	public final static String KEY_WEIXIN_SECURITY = "securityKey";
-	
-	public final static String KEY_TRANSACTION_ID = "transactionId";
-	
-	public final static String KEY_ORDER_NO = "orderNumber";
-	
-	public final static String KEY_PAYMENT_NO = "paymentNo";
-	
-	public final static String KEY_POLICY_NO = "policyNo";
-	
-	public final static String KEY_PAY_CHANNEL = "payChannel";
-	
-	public final static String KEY_PAY_RESULT = "payResult";
-	
-	public final static String KEY_PAY_TIME = "payTime";
-	
-	public final static String KEY_PAY_ACCOUNT = "payAccount";
-	
-	public final static String KEY_PAY_AMOUNT = "payAmount";
-	
-	public final static String KEY_CCIC_PAYMENT_URL = "paymentUrl";
-	
-	public final static String KEY_CCIC_WECHAT_PAYMENT_URL = "wechatPaymentUrl";
 
-	public final static String WEIXIN_JSAPI_FORWARD_URL = "/payment/weixin.jsp";
+	public final static String WEIXIN_JSAPI_FORWARD_URL = "/weixin.jsp";
 	
-	public final static String GENERAL_POST_FORM_FORWARD_URL = "../../payment/ebaoFormPay.jsp";
+	public final static String GENERAL_POST_FORM_FORWARD_URL = "../../paymentForm.jsp";
 	
-	public final static String CCIC_GET_FORWARD_URL = "../../payment/ebaoCCICPay.jsp";
-	
+
 	public final static String GENERAL_RETURN_PROXY_PATH = "/api/paymentservice/return/";
-	
-	
+
 	public final static String KEY_PAYMENT_ENDPOINT = "endPoint";
 	
 	public final static String KEY_PAYMENT_RETURN_URL = "returnURL";

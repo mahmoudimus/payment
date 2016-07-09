@@ -9,6 +9,7 @@ import org.klose.payment.server.common.context.ApplicationContextUtils;
 import org.klose.payment.server.common.utils.Assert;
 import org.klose.payment.server.common.utils.http.HttpUtils;
 import org.klose.payment.server.constant.FrontPageForwardType;
+import org.klose.payment.server.constant.PaymentConstant;
 import org.klose.payment.server.rest.model.OrderDto;
 import org.klose.payment.server.service.PaymentExtensionConfService;
 import org.klose.payment.server.service.PaymentIntegrationService;
@@ -173,7 +174,8 @@ public class PaymentResource {
         //@TODO rename
         view.getModelMap().put("model", paymentForm.getParams());
         view.getModelMap().put("returnURL", paymentForm.getReturnURL());
-
+        view.getModelMap().put(PaymentConstant.KEY_PAYMENT_ENDPOINT,
+                paymentForm.getEndPoint());
         logger.debug("payment view data : {} \n", view);
         return view;
     }
