@@ -30,7 +30,7 @@ public class MockPaymentIntegrationServiceImpl implements
         result.setSubject("test payment");
         result.setDescription("test payment");
         result.setBizNo(businessNumber);
-        result.setPrice(BigDecimal.ONE);
+        result.setPrice(BigDecimal.valueOf(0.01));
         result.setCurrency(PaymentConstant.CURRENCY_CNY);
         result.setQuantity(1);
         result.setBusinessEffectiveDate(new Date());

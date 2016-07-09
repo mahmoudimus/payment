@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-@Path("paymentservice/alipay")
+@Path("payment/alipay")
 @Component
 public class AliPayNotificationResource {
 
