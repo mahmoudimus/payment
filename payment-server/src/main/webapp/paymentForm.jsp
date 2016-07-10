@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 
 <%@ page import="java.util.Map" %>
-<%@ page import="org.klose.payment.server.constant.PaymentConstant" %>
-<%@ page import="org.klose.payment.server.util.PayFormSubmit" %>
+<%@ page import="org.klose.payment.constant.PaymentConstant" %>
+<%@ page import="org.klose.payment.util.PayFormSubmit" %>
 <!doctype html>
 <html>
 <head>
