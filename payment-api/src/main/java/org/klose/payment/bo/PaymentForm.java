@@ -22,7 +22,7 @@ public class PaymentForm implements Serializable {
 
 	private String returnURL;
 	
-	private String endPoint;
+	private String gatewayURL;
 
 	private Map<String, String> params;
 
@@ -58,12 +58,12 @@ public class PaymentForm implements Serializable {
 		this.returnURL = returnURL;
 	}
 
-	public String getEndPoint() {
-		return endPoint;
+	public String getGatewayURL() {
+		return gatewayURL;
 	}
 
-	public void setEndPoint(String endPoint) {
-		this.endPoint = endPoint;
+	public void setGatewayURL(String gatewayURL) {
+		this.gatewayURL = gatewayURL;
 	}
 
 	public Map<String, String> getParams() {
@@ -86,7 +86,7 @@ public class PaymentForm implements Serializable {
 	public String toString() {
 		return "PaymentForm [transactionId=" + transactionId
 				+ ", forwardType=" + forwardType + ", forwardURL=" + forwardURL
-				+ ", returnURL=" + returnURL + ", endPoint=" + endPoint + ", params=" + params + "]";
+				+ ", returnURL=" + returnURL + ", gatewayURL=" + gatewayURL + ", params=" + params + "]";
 	}
 
 }

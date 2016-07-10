@@ -185,7 +185,7 @@ public class PaymentResource {
         view.getModelMap().put("model", paymentForm.getParams());
         view.getModelMap().put("returnURL", paymentForm.getReturnURL());
         view.getModelMap().put(PaymentConstant.KEY_PAYMENT_ENDPOINT,
-                paymentForm.getEndPoint());
+                paymentForm.getGatewayURL());
         logger.debug("payment view data : {} \n", view);
         return view;
     }

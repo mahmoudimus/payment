@@ -1,11 +1,11 @@
 package org.klose.payment.service;
 
 
-
 import org.klose.payment.bo.AccountInfo;
 import org.klose.payment.constant.PaymentType;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AccountService {
 	
@@ -16,5 +16,7 @@ public interface AccountService {
 	String getProcessBeanByNo(String accountNo);
 	
 	boolean isAccountUnderTesting(String accountNo);
+
+	Map<String, Object> parseConfigData(String accountNo);
 	
 }

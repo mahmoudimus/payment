@@ -44,7 +44,10 @@ public class BillingData implements Serializable {
 
     private Date businessEffectiveDate;
 
+    // addition business data, it will be initialized while preparing billing data
     private Map<String, Object> extData;
+    // account config data, it will be initialized while generating payment form
+    private Map<String, Object> configData;
 
     public String getAccountNo() {
         return accountNo;
@@ -176,10 +179,32 @@ public class BillingData implements Serializable {
 
     public void addExtData(String key, Object value) {
         if (this.extData == null) {
-            this.extData = new HashMap<String, Object>();
+            this.extData = new HashMap<>();
         }
 
         this.extData.put(key, value);
+    }
+
+    public Map<String, Object> getConfigData() {
+        return configData;
+    }
+
+    public void setConfigData(Map<String, Object> configData) {
+        this.configData = configData;
+    }
+
+    public void addConfigData(String key, Object value) {
+        if (this.configData == null)
+            this.configData = new HashMap<>();
+
+
+        this.configData.put(key, value);
+    }
+
+    public void addConfigData(Map<String, Object> configMap) {
+        if (this.configData == null)
+            this.configData = new HashMap<>();
+        this.configData.putAll(configMap);
     }
 
     @Override

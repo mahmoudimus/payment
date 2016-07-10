@@ -1,11 +1,13 @@
 package org.klose.payment.service.impl;
 
 
+import org.klose.payment.bo.AccountInfo;
+import org.klose.payment.common.utils.Assert;
+import org.klose.payment.common.utils.JSONHelper;
 import org.klose.payment.constant.AccountStatus;
 import org.klose.payment.constant.AccountUseType;
 import org.klose.payment.constant.PaymentType;
 import org.klose.payment.dao.AccountDao;
-import org.klose.payment.bo.AccountInfo;
 import org.klose.payment.po.AccountPO;
 import org.klose.payment.service.AccountService;
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -98,5 +101,27 @@ public class AccountServiceImpl implements AccountService {
 		
 		return acc != null && acc.getStatus().equals(AccountStatus.Testing);
 		
+	}
+
+	@Override
+	public Map<String, Object> parseConfigData(String accountNo) {
+		Assert.isNotNull(accountNo, "account no is null");
+		logger.debug("initialize config [accountNo = {}]", accountNo);
+
+		AccountPO po = accountDAO.findByAccountNo(accountNo);
+		Assert.isNotNull(po, "account po is null");
+		logger.trace("queried account po : {}", po);
+
+		String configData = po.getConfigData();
+		Assert.isNotNull(configData, "config data is null");
+		logger.trace("config data string = {}", configData);
+
+		Map<String, Object> config = (Map<String, Object>) JSONHelper
+				.parse(configData);
+		config.put("gateway", po.getGatewayURL());
+		config.put("type", po.getType());
+
+		logger.debug("initialized config [config = {}]", config);
+		return config;
 	}
 }

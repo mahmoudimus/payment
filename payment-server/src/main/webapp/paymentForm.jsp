@@ -26,10 +26,10 @@
   </div>
 
 	<% 
-		String endPoint = (String)request.getAttribute(PaymentConstant.KEY_PAYMENT_ENDPOINT);
+		String gatewayURL = (String)request.getAttribute(PaymentConstant.KEY_PAYMENT_ENDPOINT);
 		Map paramMap = (Map)request.getAttribute("model");
 		
-		String sHtmlText = PayFormSubmit.buildRequest(endPoint, paramMap, "post");
+		String sHtmlText = PayFormSubmit.buildRequest(gatewayURL, paramMap, "post");
 		out.println(sHtmlText);
 	%>
 

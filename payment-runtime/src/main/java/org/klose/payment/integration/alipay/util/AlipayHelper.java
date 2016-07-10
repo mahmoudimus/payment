@@ -4,7 +4,7 @@ import org.klose.payment.common.utils.Assert;
 import org.klose.payment.integration.alipay.config.AlipayConstant;
 
 
-import org.klose.payment.integration.alipay.sign.MD5;
+import org.klose.payment.util.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,7 +70,7 @@ public class AlipayHelper {
 					+ " paramStr = " + paramsStr);
 
 		if (AlipayConstant.SIGN_TYPE.equals("MD5")) {
-			return MD5.verify(paramsStr, signature, secretKey,
+			return MD5Util.verify(paramsStr, signature, secretKey,
 					AlipayConstant.INPUT_CHARSET);
 		}
 
@@ -96,7 +96,7 @@ public class AlipayHelper {
 		String paramsStr = AlipayCore.createLinkString(filteredParams);
 
 		Assert.isNotNull(paramsStr);
-		String signatureOfParams = MD5.sign(paramsStr, secretKey,
+		String signatureOfParams = MD5Util.sign(paramsStr, secretKey,
 				AlipayConstant.INPUT_CHARSET);
 
 		if (logger.isDebugEnabled())

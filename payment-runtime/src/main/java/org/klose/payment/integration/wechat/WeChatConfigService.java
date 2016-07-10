@@ -3,7 +3,6 @@ package org.klose.payment.integration.wechat;
 
 import org.klose.payment.common.utils.Assert;
 import org.klose.payment.dao.AccountDao;
-import org.klose.payment.integration.alipay.AlipayConfigService;
 import org.klose.payment.common.utils.JSONHelper;
 import org.klose.payment.integration.wechat.config.WeChatConfig;
 import org.klose.payment.po.AccountPO;
@@ -21,7 +20,7 @@ public class WeChatConfigService {
 	private AccountDao dao;
 
 	private final static Logger logger = LoggerFactory
-			.getLogger(AlipayConfigService.class);
+			.getLogger(WeChatConfigService.class);
 
 	@SuppressWarnings("unchecked")
 	public WeChatConfig initializeConfig(String accountNo) {
