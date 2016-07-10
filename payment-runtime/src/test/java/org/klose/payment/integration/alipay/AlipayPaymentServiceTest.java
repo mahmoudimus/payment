@@ -5,9 +5,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.klose.payment.server.bo.BillingData;
-import org.klose.payment.server.bo.PaymentForm;
-import org.klose.payment.server.service.EbaoPaymentService;
+import org.klose.payment.bo.BillingData;
+import org.klose.payment.bo.PaymentForm;
+import org.klose.payment.service.PaymentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.annotation.Rollback;
@@ -21,12 +21,12 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:spring-payment-beans.xml" })
+@ContextConfiguration(locations = { "classpath*:spring-payment-test.xml" })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
 public class AlipayPaymentServiceTest {
 	@Resource(name = "aliGateWayPaymentService")
-	private EbaoPaymentService service;
+	private PaymentService service;
 	private BillingData data;
 	private final static Logger logger = LoggerFactory
 			.getLogger(AlipayPaymentServiceTest.class);
@@ -41,7 +41,7 @@ public class AlipayPaymentServiceTest {
 		data.setCurrency("CNY");
 		data.setDescription("test policy issue for alipay");
 		data.setSubject("test product");
-		data.setHostEndpoint("http://axatp.localhost:10080/pa");
+		data.setContextPath("http://axatp.localhost:10080/pa");
 		data.setPrice(new BigDecimal(0.01));
 		data.setQuantity(1);
 		data.setReturnURL("");

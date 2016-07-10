@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 
 <%@ page import="java.util.Map" %>
-<%@ page import="org.klose.payment.server.constant.PaymentConstant" %>
-<%@ page import="org.klose.payment.server.util.PayFormSubmit" %>
+<%@ page import="org.klose.payment.constant.PaymentConstant" %>
+<%@ page import="org.klose.payment.util.PayFormSubmit" %>
 <!doctype html>
 <html>
 <head>
@@ -26,10 +26,10 @@
   </div>
 
 	<% 
-		String endPoint = (String)request.getAttribute(PaymentConstant.KEY_PAYMENT_ENDPOINT);
+		String gatewayURL = (String)request.getAttribute(PaymentConstant.KEY_PAYMENT_ENDPOINT);
 		Map paramMap = (Map)request.getAttribute("model");
 		
-		String sHtmlText = PayFormSubmit.buildRequest(endPoint, paramMap, "post");
+		String sHtmlText = PayFormSubmit.buildRequest(gatewayURL, paramMap, "post");
 		out.println(sHtmlText);
 	%>
 

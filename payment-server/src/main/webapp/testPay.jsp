@@ -10,8 +10,6 @@
 <form id="orderDto" name="orderDto" action="<%=request.getContextPath() %>/api/payment/create" method="POST">
     bizNo<input id="bizNo" name="bizNo" type="text" value=""/>
     accountNo<input id="accountNo" name="accountNo" type="text" value=""/>
-    bizType<input id="bizType" name="bizType" type="text" value=""/>
-    <input id="returnURL" name="returnURL" type="text" value="http://www.baidu.com"/>
     <input type="submit" value="Submit"/>
 
 </form>
