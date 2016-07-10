@@ -40,6 +40,8 @@ public class AlipayPaymentService implements PaymentService {
         logger.debug("[billing  : \n {} ]", bill);
 
         initConfig(bill);
+        bill.setOrderNo(ParamUtils.getOrderNo(
+                (String) bill.getConfigData().get("partner")));
         Long transId = transactionService
                 .createTransactionFromBillingData(bill);
 
@@ -112,8 +114,7 @@ public class AlipayPaymentService implements PaymentService {
                         .concat("?transId=")
                         .concat(transId.toString()));
 
-        params.put("out_trade_no", ParamUtils.getOrderNo(
-                (String) config.get("partner")));
+        params.put("out_trade_no", bill.getOrderNo());
         params.put("subject", bill.getSubject());
         params.put("body", bill.getDescription());
 
