@@ -11,7 +11,7 @@ import org.klose.payment.server.constant.FrontPageForwardType;
 import org.klose.payment.server.constant.PaymentConstant;
 import org.klose.payment.server.constant.PaymentType;
 import org.klose.payment.server.service.AccountService;
-import org.klose.payment.server.service.EbaoPaymentService;
+import org.klose.payment.server.service.PaymentService;
 import org.klose.payment.server.service.TransactionDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,8 +65,8 @@ public class PaymentProxyImpl implements PaymentProxy {
 			String procerssBeanName = accountService.getProcessBeanByNo(accountNo);
 			
 			if(procerssBeanName != null){
-				EbaoPaymentService paymentService =
-						ApplicationContextUtils.getBean(procerssBeanName,	EbaoPaymentService.class);
+				PaymentService paymentService =
+						ApplicationContextUtils.getBean(procerssBeanName,	PaymentService.class);
 				
 				if(paymentService != null){
 					PaymentForm result = paymentService.generatePaymentData(bill);

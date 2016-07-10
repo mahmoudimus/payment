@@ -11,7 +11,7 @@ import org.klose.payment.server.dao.AccountDao;
 import org.klose.payment.server.integration.wechat.dto.WechatPayDto;
 import org.klose.payment.server.integration.wechat.dto.WechatPrepayResponseDto;
 import org.klose.payment.server.po.AccountPO;
-import org.klose.payment.server.service.EbaoPaymentService;
+import org.klose.payment.server.service.PaymentService;
 import org.klose.payment.server.util.ValidateCode;
 import org.klose.payment.server.service.AccountService;
 import org.klose.payment.server.service.TransactionDataService;
@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component(value = "WeixinJSApiPaymentService")
-public class WeixinJSApiPaymentService implements EbaoPaymentService {
+public class WeixinJSApiPaymentService implements PaymentService {
 
 	@Autowired
 	AccountService accountService;

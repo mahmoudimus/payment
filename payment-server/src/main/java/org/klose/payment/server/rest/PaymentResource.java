@@ -10,6 +10,7 @@ import org.klose.payment.server.common.utils.Assert;
 import org.klose.payment.server.common.utils.http.HttpUtils;
 import org.klose.payment.server.constant.FrontPageForwardType;
 import org.klose.payment.server.constant.PaymentConstant;
+import org.klose.payment.server.dao.TransactionDao;
 import org.klose.payment.server.rest.model.OrderDto;
 import org.klose.payment.server.service.PaymentExtensionConfService;
 import org.klose.payment.server.service.PaymentIntegrationService;
@@ -23,7 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @Path("/payment")
 @Component
@@ -36,6 +40,9 @@ public class PaymentResource {
 
     @Autowired
     private PaymentProxy paymentProxy;
+
+    @Autowired
+    private TransactionDao transDao;
 
 
     @GET
@@ -178,5 +185,15 @@ public class PaymentResource {
                 paymentForm.getEndPoint());
         logger.debug("payment view data : {} \n", view);
         return view;
+    }
+
+    @GET
+    @Path("/return/{transId}")
+    public Response returnProxy(@PathParam("transId") Long transId,
+                                @Context HttpServletRequest request,
+                                @Context HttpServletResponse response) throws URISyntaxException {
+
+        String uri = transDao.findReturnURLById(transId);
+        return Response.temporaryRedirect(new URI(uri)).build();
     }
 }

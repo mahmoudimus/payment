@@ -10,7 +10,7 @@ import org.klose.payment.server.integration.alipay.bean.AlipayOrderVO;
 import org.klose.payment.server.integration.alipay.config.AlipayConfig;
 import org.klose.payment.server.integration.alipay.config.AlipayConstant;
 import org.klose.payment.server.integration.alipay.util.AlipayHelper;
-import org.klose.payment.server.service.EbaoPaymentService;
+import org.klose.payment.server.service.PaymentService;
 import org.klose.payment.server.service.TransactionDataService;
 import org.klose.payment.server.util.ParamUtils;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component(value = "aliGateWayPaymentService")
-public class AlipayPaymentService implements EbaoPaymentService {
+public class AlipayPaymentService implements PaymentService {
 	@Autowired
 	private AlipayConfigService configService;
 	@Autowired
