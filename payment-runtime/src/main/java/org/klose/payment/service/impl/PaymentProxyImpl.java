@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class PaymentProxyImpl implements PaymentProxy {
 	@Autowired
@@ -96,6 +98,11 @@ public class PaymentProxyImpl implements PaymentProxy {
 	public String findReturnUrl(Long transactionId) {
 		Assert.isNotNull(transactionId);
 		return transactionService.findReturnURL(transactionId);
+	}
+
+	@Override
+	public Map<String, Object> parseConfig(String accountNo) {
+		return accountService.parseConfigData(accountNo);
 	}
 
 	@Override

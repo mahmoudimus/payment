@@ -6,6 +6,8 @@ import org.klose.payment.bo.PaymentResult;
 import org.klose.payment.bo.AccountInfo;
 import org.klose.payment.bo.BillingData;
 
+import java.util.Map;
+
 public interface PaymentProxy {
 
 	PaymentForm createPayment(BillingData bill) throws Exception;
@@ -18,4 +20,7 @@ public interface PaymentProxy {
 			Long transactionId, boolean isSuccess, String payId, String notifyMsg);
 
 	String findReturnUrl(Long transactionId);
+
+	Map<String, Object> parseConfig(String accountNo);
+
 }

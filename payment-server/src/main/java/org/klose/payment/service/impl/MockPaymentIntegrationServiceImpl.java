@@ -1,9 +1,12 @@
 package org.klose.payment.service.impl;
 
 
+import org.klose.payment.bo.AccountInfo;
 import org.klose.payment.bo.BillingData;
 import org.klose.payment.common.utils.Assert;
 import org.klose.payment.constant.PaymentConstant;
+import org.klose.payment.constant.PaymentType;
+import org.klose.payment.integration.wechat.constant.WeChatConstant;
 import org.klose.payment.service.PaymentIntegrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,12 +49,9 @@ public class MockPaymentIntegrationServiceImpl implements
     /**
      * override for extension
      *
-     * @param data
+     * @param data: order data
      */
     protected void prepareExtensionData(BillingData data) {
-        //Assert.isNotNull(data, "billing data is null");
-        //data.addExtData(PaymentConstant.KEY_WEIXIN_PRODUCT_ID, "test product");
-
     }
 
     @Override

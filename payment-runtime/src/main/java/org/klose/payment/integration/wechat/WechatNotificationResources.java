@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-@Path("paymentservice/wechat")
+@Path("payment/wechat")
 @Component
 public class WechatNotificationResources {
 	
@@ -62,6 +62,9 @@ public class WechatNotificationResources {
 		Map<String, String> notifyParams = null;		
 		try {
 			notifyParams = XMLUtils.parseToMap(notifyData, encoding);
+			for(String key: notifyParams.keySet())
+				logger.debug("notifiy key = {}, value = {}", key, notifyParams.get(key));
+
 		} catch (JDOMException | IOException e1) {
 			e1.printStackTrace();
 		}
@@ -95,7 +98,9 @@ public class WechatNotificationResources {
 		} catch (Exception ex) {
 			logger.error(ex.getMessage());
 		}
-		
+		for(String key: resultMap.keySet())
+			logger.debug("key = {}, value = {}", key, resultMap.get(key));
+
 		return resultMap;
 	}
 			

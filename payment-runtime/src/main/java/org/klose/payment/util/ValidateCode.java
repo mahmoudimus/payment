@@ -10,7 +10,7 @@ public class ValidateCode {
 			'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 	
 	public static String randomCode(int length){
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for(int i=0; i<length; i++){
 			sb.append(randomCode());
 		}
@@ -19,17 +19,8 @@ public class ValidateCode {
 	}
 	
 	public static String randomCode(){
-
 		Random random = new Random();
-		
 		return String.valueOf(codeSequence[random.nextInt(codeSequence.length)]);
-	}
-	
-	
-	public static void main(String[] args){
-		
-		System.out.println(ValidateCode.randomCode(10));
-		
 	}
 
 }

@@ -8,18 +8,14 @@ public interface PaymentConstant {
     String CURRENCY_USD = "USD";
 
     String GENERAL_POST_FORM_FORWARD_URL = "/paymentForm.jsp";
-
     String GENERAL_RETURN_PROXY_PATH = "/api/payment/return";
-
     String GENERAL_RETURN_PAGE_URL = "/paymentResult.jsp";
+
     String RETURN_PAGE_URL = "returnPageUrl";
-
     String KEY_PAYMENT_ENDPOINT = "endPoint";
-
     String KEY_PAYMENT_RETURN_URL = "returnURL";
 
     String SUFFIX_RETURN_URL = "/%s";
-
     BigDecimal TESTING_PAY_AMOUNT = new BigDecimal("0.01");
 
 //	/**页面回调URL参数,建议存放对象数组或集合类型*/

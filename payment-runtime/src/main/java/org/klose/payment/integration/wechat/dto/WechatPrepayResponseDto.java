@@ -1,81 +1,84 @@
 package org.klose.payment.integration.wechat.dto;
 
+import java.io.Serializable;
+
 /**
  * 获取预订单返回
- * 
- * @author Administrator
  *
+ * @author Administrator
  */
 
-public class WechatPrepayResponseDto {
-	
-	private String return_code;
-	
-	private String prepay_id;
-	
-	private String code_url;
-	
-	private String sign;
-	
-	private Integer amount;
-	
-	private String appId;
-	
-	private String securityKey;
+public class WechatPrepayResponseDto implements Serializable{
 
-	public String getReturn_code() {
-		return return_code;
-	}
+    private String return_code;
 
-	public void setReturn_code(String return_code) {
-		this.return_code = return_code;
-	}
+    private String prepay_id;
 
-	public String getPrepay_id() {
-		return prepay_id;
-	}
+    private String sign;
 
-	public void setPrepay_id(String prepay_id) {
-		this.prepay_id = prepay_id;
-	}
+    private String appId;
 
-	public String getCode_url() {
-		return code_url;
-	}
+    private String securityKey;
 
-	public void setCode_url(String code_url) {
-		this.code_url = code_url;
-	}
+    private Integer amount;
 
-	public String getSign() {
-		return sign;
-	}
+    public String getReturn_code() {
+        return return_code;
+    }
 
-	public void setSign(String sign) {
-		this.sign = sign;
-	}
+    public void setReturn_code(String return_code) {
+        this.return_code = return_code;
+    }
 
-	public Integer getAmount() {
-		return amount;
-	}
+    public String getPrepay_id() {
+        return prepay_id;
+    }
 
-	public void setAmount(Integer amount) {
-		this.amount = amount;
-	}
+    public void setPrepay_id(String prepay_id) {
+        this.prepay_id = prepay_id;
+    }
 
-	public String getAppId() {
-		return appId;
-	}
+    public String getSign() {
+        return sign;
+    }
 
-	public void setAppId(String appId) {
-		this.appId = appId;
-	}
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
 
-	public String getSecurityKey() {
-		return securityKey;
-	}
+    public String getAppId() {
+        return appId;
+    }
 
-	public void setSecurityKey(String securityKey) {
-		this.securityKey = securityKey;
-	}	
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
+    public String getSecurityKey() {
+        return securityKey;
+    }
+
+    public void setSecurityKey(String securityKey) {
+        this.securityKey = securityKey;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "WechatPrepayResponseDto{" +
+                "return_code='" + return_code + '\'' +
+                ", prepay_id='" + prepay_id + '\'' +
+                ", sign='" + sign + '\'' +
+                ", appId='" + appId + '\'' +
+                ", securityKey='" + securityKey + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }

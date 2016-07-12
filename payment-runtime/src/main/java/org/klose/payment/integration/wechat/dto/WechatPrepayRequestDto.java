@@ -142,9 +142,7 @@ public class WechatPrepayRequestDto {
 		packageParams.put("mch_id", this.mch_id);  
 		packageParams.put("nonce_str", nonce_str);  
 		packageParams.put("body", body);  
-		//packageParams.put("attach", attach);  
 		packageParams.put("out_trade_no", out_trade_no);
-		//packageParams.put("total_fee", String.valueOf(this.total_fee));  
 		packageParams.put("total_fee", String.valueOf(total_fee));
 		packageParams.put("spbill_create_ip", spbill_create_ip);  
 		packageParams.put("notify_url", notify_url);  
