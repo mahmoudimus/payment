@@ -183,7 +183,6 @@ public class PaymentResource {
         Assert.isNotNull(paymentForm);
         Assert.isNotNull(paymentForm.getForwardURL());
         Assert.isNotNull(paymentForm.getParams());
-        Assert.isNotNull(paymentForm.getReturnURL());
 
         logger.debug("return url = {}", paymentForm.getReturnURL());
 
