@@ -1,13 +1,10 @@
-package org.klose.payment.service.impl;
+package org.klose.payment.server.prepare.impl;
 
 
-import org.klose.payment.bo.AccountInfo;
 import org.klose.payment.bo.BillingData;
 import org.klose.payment.common.utils.Assert;
 import org.klose.payment.constant.PaymentConstant;
-import org.klose.payment.constant.PaymentType;
-import org.klose.payment.integration.wechat.constant.WeChatConstant;
-import org.klose.payment.service.PaymentIntegrationService;
+import org.klose.payment.server.prepare.PaymentIntegrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

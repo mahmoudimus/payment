@@ -33,7 +33,6 @@
 <form id="orderDto" name="orderDto" method="POST">
     bizNo<input id="bizNo" name="bizNo" type="text" value=""/>
     accountNo<input id="accountNo" name="accountNo" type="text" value=""/>
-<!--     <input type="submit" value="Submit"/> --> 
 	<button id="submitBtn"> submit</button>
 </form>
 </body>

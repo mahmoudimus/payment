@@ -1,4 +1,4 @@
-package org.klose.payment.rest;
+package org.klose.payment.server.rest;
 
 import org.jboss.resteasy.annotations.Form;
 import org.jboss.resteasy.plugins.providers.html.View;
@@ -8,7 +8,7 @@ import org.klose.payment.common.utils.http.HttpUtils;
 import org.klose.payment.common.utils.wechat.WeChatOauth2Token;
 import org.klose.payment.common.utils.wechat.WeChatUtil;
 import org.klose.payment.integration.wechat.constant.WeChatConstant;
-import org.klose.payment.rest.model.OrderDto;
+import org.klose.payment.server.rest.model.OrderDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

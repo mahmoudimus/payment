@@ -55,7 +55,7 @@ public class WeixinJSApiPaymentService implements PaymentService {
         Long transactionId = transactionService.createTransactionFromBillingData(bill);
         viewData.setTransactionId(transactionId);
         viewData.setReturnURL(bill.getContextPath().concat(PaymentConstant.GENERAL_RETURN_PROXY_PATH).
-                concat("?transactionId=").concat(transactionId.toString()));
+                concat("?transId=").concat(transactionId.toString()));
 
         return viewData;
     }

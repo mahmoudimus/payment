@@ -1,4 +1,4 @@
-package org.klose.payment.rest;
+package org.klose.payment.server.rest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.resteasy.annotations.Form;
@@ -12,9 +12,9 @@ import org.klose.payment.constant.FrontPageForwardType;
 import org.klose.payment.constant.PaymentConstant;
 import org.klose.payment.constant.PaymentType;
 import org.klose.payment.integration.wechat.constant.WeChatConstant;
-import org.klose.payment.rest.model.OrderDto;
+import org.klose.payment.server.rest.model.OrderDto;
 import org.klose.payment.service.PaymentExtensionConfService;
-import org.klose.payment.service.PaymentIntegrationService;
+import org.klose.payment.server.prepare.PaymentIntegrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

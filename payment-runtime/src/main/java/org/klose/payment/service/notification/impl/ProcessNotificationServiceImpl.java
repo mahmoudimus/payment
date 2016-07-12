@@ -1,4 +1,4 @@
-package org.klose.payment.service.callback.impl;
+package org.klose.payment.service.notification.impl;
 
 
 import org.klose.payment.api.CallBackAgent;
@@ -7,7 +7,7 @@ import org.klose.payment.common.context.ApplicationContextUtils;
 import org.klose.payment.constant.PaymentStatus;
 import org.klose.payment.dao.TransactionDao;
 import org.klose.payment.po.TransactionPO;
-import org.klose.payment.service.callback.ProcessNotificationService;
+import org.klose.payment.service.notification.ProcessNotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,7 @@ public class ProcessNotificationServiceImpl implements
 
     @PostConstruct
     public void initIt() throws Exception {
-        logger.info("Async Payment-service callback Worker Thread Pool Initialized!");
+        logger.info("Async Payment-service notification Worker Thread Pool Initialized!");
         threadPool = Executors.newFixedThreadPool(WORKER_THREAD_POOL_SIZE);
     }
 
@@ -72,7 +72,7 @@ public class ProcessNotificationServiceImpl implements
 
                 if (!threadPool.awaitTermination(45, TimeUnit.SECONDS))
                     System.err
-                            .println("Async Payment callback Worker Thread Pool did not terminate");
+                            .println("Async Payment notification Worker Thread Pool did not terminate");
             }
         } catch (InterruptedException ie) {
             threadPool.shutdownNow();
@@ -157,7 +157,7 @@ public class ProcessNotificationServiceImpl implements
 
         if (agent != null) {
 
-            logger.info("Notify callback agent: ");
+            logger.info("Notify notification agent: ");
 
             PaymentResult paymentResult = new PaymentResult();
 

@@ -1,4 +1,4 @@
-package org.klose.payment.service;
+package org.klose.payment.server.prepare;
 
 
 import org.klose.payment.bo.BillingData;

@@ -1,4 +1,4 @@
-package org.klose.payment.context;
+package org.klose.payment.server.context;
 
 /**
  * Created by klose on 7/2/16.

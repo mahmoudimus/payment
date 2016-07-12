@@ -17,7 +17,7 @@
 
     <context-param>
         <param-name>contextInitializerClasses</param-name>
-        <param-value>org.klose.payment.context.ContextInitializer</param-value>
+        <param-value>org.klose.payment.server.context.ContextInitializer</param-value>
     </context-param>
 
 

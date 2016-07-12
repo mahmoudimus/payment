@@ -1,4 +1,4 @@
-package org.klose.payment.service.callback.impl;
+package org.klose.payment.server.callback.impl;
 
 
 import org.klose.payment.common.utils.Assert;
@@ -25,7 +25,7 @@ public class MockCallbackServiceImpl implements CallBackAgent {
         Assert.isNotNull(transactionId, "the transactionId %s can not be null",
                 transactionId);
 
-        logger.info("start process payment callback");
+        logger.info("start process payment notification");
         logger.debug("[payment result : {} ]", payResult);
 
         //@TODO according to the payment status, something like issue policy should be invoked
