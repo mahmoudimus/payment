@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class PayFormSubmit {
 	
-	static Logger logger = LoggerFactory.getLogger(PayFormSubmit.class);
+	private final static Logger logger = LoggerFactory.getLogger(PayFormSubmit.class);
 
 	public static String buildRequest(String url, Map<String, Object> sParaTemp, String strMethod){
 		return buildRequest(url,sParaTemp,strMethod,"OK");

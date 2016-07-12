@@ -1,4 +1,4 @@
-package org.klose.payment.service.callback;
+package org.klose.payment.service.notification;
 
 import java.util.Map;
 

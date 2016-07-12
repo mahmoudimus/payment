@@ -1,5 +1,5 @@
 # payment
-payment gateway of alipay, wechat etc. 
+payment integration of alipay, wechat etc.
 
 ## License
 Copyright © 2016 

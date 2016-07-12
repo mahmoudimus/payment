@@ -6,7 +6,7 @@ import org.klose.payment.dao.TransactionDao;
 import org.klose.payment.integration.alipay.util.AlipayHelper;
 import org.klose.payment.po.TransactionPO;
 import org.klose.payment.service.AccountService;
-import org.klose.payment.service.callback.ProcessNotificationService;
+import org.klose.payment.service.notification.ProcessNotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

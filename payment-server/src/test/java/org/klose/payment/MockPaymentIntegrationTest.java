@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.klose.payment.bo.BillingData;
 import org.klose.payment.constant.PaymentConstant;
-import org.klose.payment.service.PaymentIntegrationService;
+import org.klose.payment.server.prepare.PaymentIntegrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;

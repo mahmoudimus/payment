@@ -29,5 +29,7 @@ public interface WeChatConstant {
 
     String KEY_WEIXIN_SECURITY = "securityKey";
 
+    String CREATE_ORDER_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
+    String WECHAT_PREPAY_NOTIFY_URL = "/api/payment/wechat/notification";
 }

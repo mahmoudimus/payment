@@ -1,4 +1,4 @@
-package org.klose.payment.rest.model;
+package org.klose.payment.server.rest.model;
 
 import javax.ws.rs.FormParam;
 

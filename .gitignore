@@ -25,3 +25,7 @@ buildNumber.properties
 
 *.iml
 
+*.classpath
+*.settings 
+*.project
+

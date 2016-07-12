@@ -1,4 +1,4 @@
-package org.klose.payment.rest;
+package org.klose.payment.server.rest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.resteasy.annotations.Form;
@@ -10,9 +10,11 @@ import org.klose.payment.common.utils.Assert;
 import org.klose.payment.common.utils.http.HttpUtils;
 import org.klose.payment.constant.FrontPageForwardType;
 import org.klose.payment.constant.PaymentConstant;
-import org.klose.payment.rest.model.OrderDto;
+import org.klose.payment.constant.PaymentType;
+import org.klose.payment.integration.wechat.constant.WeChatConstant;
+import org.klose.payment.server.rest.model.OrderDto;
 import org.klose.payment.service.PaymentExtensionConfService;
-import org.klose.payment.service.PaymentIntegrationService;
+import org.klose.payment.server.prepare.PaymentIntegrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,11 +121,9 @@ public class PaymentResource {
 
         BillingData data = paymentIntegrationService
                 .prepareBillingData(orderDto.getBizNo());
-        data.setAccountNo(orderDto.getAccountNo());
-        data.setAccountType(accountInfo.getType().getTypeId());
         data.setBizType(orderDto.getBizType());
-
-
+        data.setAccountNo(accountInfo.getAccountNo());
+        data.setAccountType(accountInfo.getType().getTypeId());
         data.setPrepareService(prepareBillDataBean);
         data.setCallBackAgent(callbackAgentBean);
 
@@ -137,6 +137,13 @@ public class PaymentResource {
             returnURL = contextPath.concat(returnURL);
 
         data.setReturnURL(returnURL);
+
+        //special handle for wechat js api
+        if(accountInfo.getType().equals(PaymentType.WX_JSAPI)) {
+            data.addExtData(WeChatConstant.KEY_WEIXIN_PRODUCT_ID, "test product");
+            data.addExtData(WeChatConstant.KEY_WEIXIN_OPENID, request.getAttribute(WeChatConstant.KEY_WEIXIN_OPENID));
+        }
+
         logger.debug("prepared billing data : \n {}", data);
         return data;
     }
@@ -176,7 +183,8 @@ public class PaymentResource {
         Assert.isNotNull(paymentForm);
         Assert.isNotNull(paymentForm.getForwardURL());
         Assert.isNotNull(paymentForm.getParams());
-        Assert.isNotNull(paymentForm.getReturnURL());
+
+        logger.debug("return url = {}", paymentForm.getReturnURL());
 
         logger.debug("forward view data : {} \n", paymentForm);
 

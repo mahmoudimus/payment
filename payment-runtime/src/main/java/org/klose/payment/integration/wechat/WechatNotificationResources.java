@@ -11,7 +11,7 @@ import org.klose.payment.integration.wechat.constant.WeChatConstant;
 import org.klose.payment.po.AccountPO;
 import org.klose.payment.po.TransactionPO;
 import org.klose.payment.service.AccountService;
-import org.klose.payment.service.callback.ProcessNotificationService;
+import org.klose.payment.service.notification.ProcessNotificationService;
 import org.klose.payment.util.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-@Path("paymentservice/wechat")
+@Path("payment/wechat")
 @Component
 public class WechatNotificationResources {
 	
@@ -45,14 +45,14 @@ public class WechatNotificationResources {
 	ProcessNotificationService notificationService;
 
 	
-	final static String WECHAT_RESPONSE_MSG = 
+	private final static String WECHAT_RESPONSE_MSG =
 			"<xml><return_code><![CDATA[%s]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";	
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@SuppressWarnings("unchecked")
 	@POST	
-	@Path("/callback")
+	@Path("/notification")
 	public Response handlePaymentCallback(@Context HttpServletRequest request) {
 		
 		String encoding = request.getCharacterEncoding();
@@ -62,6 +62,9 @@ public class WechatNotificationResources {
 		Map<String, String> notifyParams = null;		
 		try {
 			notifyParams = XMLUtils.parseToMap(notifyData, encoding);
+			for(String key: notifyParams.keySet())
+				logger.debug("notifiy key = {}, value = {}", key, notifyParams.get(key));
+
 		} catch (JDOMException | IOException e1) {
 			e1.printStackTrace();
 		}
@@ -95,7 +98,9 @@ public class WechatNotificationResources {
 		} catch (Exception ex) {
 			logger.error(ex.getMessage());
 		}
-		
+		for(String key: resultMap.keySet())
+			logger.debug("key = {}, value = {}", key, resultMap.get(key));
+
 		return resultMap;
 	}
 			
