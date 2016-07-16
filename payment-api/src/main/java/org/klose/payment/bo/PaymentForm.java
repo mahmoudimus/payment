@@ -76,7 +76,7 @@ public class PaymentForm implements Serializable {
 
 	public void addParam(String key, String value) {
 		if (this.params == null) {
-			this.params = new HashMap<String, String>();
+			this.params = new HashMap<>();
 		}
 
 		this.params.put(key, value);

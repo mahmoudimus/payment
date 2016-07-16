@@ -1,6 +1,7 @@
 package org.klose.payment.integration.wechat.constant;
 
 /**
+ * 微信支付常量
  * Created by klose on 7/10/16.
  */
 public interface WeChatConstant {

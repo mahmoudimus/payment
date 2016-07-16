@@ -64,14 +64,6 @@ public class WechatPrepayRequestDto {
 		this.nonce_str = nonce_str;
 	}
 
-	//public String getSign() {
-	//	return sign;
-	//}
-
-	//public void setSign(String sign) {
-	//	this.sign = sign;
-	//}
-
 	public String getBody() {
 		return body;
 	}
@@ -177,7 +169,7 @@ public class WechatPrepayRequestDto {
 				+ "<body>" + this.getBody() + "</body>"
 				+ "<out_trade_no>" + this.getOut_trade_no() + "</out_trade_no>"
 				//+ "<total_fee>" + String.valueOf(this.getTotal_fee()) + "</total_fee>"
-				+ "<total_fee>"+ totalFee.intValue()+"</total_fee>"
+				+ "<total_fee>"+ totalFee +"</total_fee>"
 				+ "<spbill_create_ip>" + this.getSpbill_create_ip() + "</spbill_create_ip>"
 				+ "<notify_url>" + this.getNotify_url() + "</notify_url>"
 				+ "<trade_type>" + this.getTrade_type() + "</trade_type>"

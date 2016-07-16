@@ -2,6 +2,7 @@ package org.klose.payment.integration.alipay;
 
 
 import org.klose.payment.common.utils.Assert;
+import org.klose.payment.common.utils.LogUtils;
 import org.klose.payment.dao.TransactionDao;
 import org.klose.payment.integration.alipay.util.AlipayHelper;
 import org.klose.payment.po.TransactionPO;
@@ -46,7 +47,7 @@ public class AliPayNotificationResource {
         Map<String, String> params = this.parseRequest(request);
         Assert.isNotNull(params, "params parsed by request is null");
         logger.debug("receive notification + [params: {} ]",
-                AlipayHelper.getMapContent(params));
+                LogUtils.getMapContent(params));
 
         // 核心产生的交易号
         String orderNo = params.get("out_trade_no");
@@ -62,13 +63,13 @@ public class AliPayNotificationResource {
         String notifyData = this.transMapToString(notifyMap);
 
         logger.trace("tradeStatus = {}, notfiyMap : {}, notifyData = {}",
-                tradeStatus, AlipayHelper.getMapContent(notifyMap), notifyData);
+                tradeStatus, LogUtils.getMapContent(notifyMap), notifyData);
 
         String payId = null;
 
         logger.trace(
                 "orderNo = {}, notifyMap: {}, notifyDate = {}",
-                orderNo, AlipayHelper.getMapContent(notifyMap),
+                orderNo, LogUtils.getMapContent(notifyMap),
                 notifyData);
 
         if (AlipayHelper.verifyNotification(params,
@@ -114,13 +115,13 @@ public class AliPayNotificationResource {
             params.put(name, valueStr);
         }
         logger.trace("parsed request params : {}",
-                AlipayHelper.getMapContent(params));
+                LogUtils.getMapContent(params));
         return params;
     }
 
     private String transMapToString(Map<String, String> map) {
         Assert.isNotNull(map, "map can not be null");
-        logger.trace("map : {}", AlipayHelper.getMapContent(map));
+        logger.trace("map : {}", LogUtils.getMapContent(map));
 
         StringBuilder sb = new StringBuilder();
         for (String key : map.keySet()) {
@@ -145,13 +146,13 @@ public class AliPayNotificationResource {
         logger.trace("account PO : {}", po);
         Map<String, Object> config = accountService.parseConfigData(accountNo);
         Assert.isNotNull(config);
-        logger.trace("account config : {}", config);
+        logger.trace("account config : {}", LogUtils.getMapContent(config));
         return config;
     }
 
     private Map<String, String> buildNotifyMap(Map<String, String> params) {
         Assert.isNotNull(params);
-        logger.trace("params : {}", AlipayHelper.getMapContent(params));
+        logger.trace("params : {}", LogUtils.getMapContent(params));
         Map<String, String> map = new HashMap<>();
         String[] keys = new String[]{"seller_email", "subject", "body",
                 "buyer_id", "quantity", "discount", "total_fee",
@@ -161,7 +162,7 @@ public class AliPayNotificationResource {
             map.put(key, params.get(key));
 
         logger.trace("built notify map : {}",
-                AlipayHelper.getMapContent(params));
+                LogUtils.getMapContent(params));
         return map;
     }
 }

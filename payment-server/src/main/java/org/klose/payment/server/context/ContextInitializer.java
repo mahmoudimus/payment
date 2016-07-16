@@ -1,9 +1,5 @@
 package org.klose.payment.server.context;
 
-/**
- * Created by klose on 7/2/16.
- */
-import java.math.BigDecimal;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.converters.BigDecimalConverter;
@@ -12,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+
+import java.math.BigDecimal;
 
 
 public class ContextInitializer implements

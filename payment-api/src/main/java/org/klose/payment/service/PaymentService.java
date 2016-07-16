@@ -6,6 +6,6 @@ import org.klose.payment.bo.PaymentForm;
 
 public interface PaymentService {
 
-	PaymentForm generatePaymentData(BillingData bill) throws Exception;
+	PaymentForm generatePaymentData(BillingData bill) ;
 	
 }
