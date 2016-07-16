@@ -94,7 +94,7 @@ public class WeixinJSApiPaymentService implements PaymentService {
         Assert.isNotNull(bill);
         WechatPrepayData prepay = generatePrepay(bill);
         logger.debug("prepay : \n {} ", prepay);
-        WechatPrepayResponseDto prepayResponse = null;
+        WechatPrepayResponseDto prepayResponse;
         try {
             prepayResponse = WechatPrepayService.getPrepay(
                     prepay, bill.getContextPath());

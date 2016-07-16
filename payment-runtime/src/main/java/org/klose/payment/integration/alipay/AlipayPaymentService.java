@@ -4,6 +4,7 @@ package org.klose.payment.integration.alipay;
 import org.klose.payment.bo.BillingData;
 import org.klose.payment.bo.PaymentForm;
 import org.klose.payment.common.utils.Assert;
+import org.klose.payment.common.utils.LogUtils;
 import org.klose.payment.constant.FrontPageForwardType;
 import org.klose.payment.constant.PaymentConstant;
 import org.klose.payment.constant.PaymentType;
@@ -72,10 +73,7 @@ public class AlipayPaymentService implements PaymentService {
         logger.debug("[accountNo = {} ]", accountNo);
         Map<String, Object> configMap = accountService.parseConfigData(accountNo);
 
-        logger.debug("[ parsed config : ");
-        for (String key : configMap.keySet())
-            logger.debug(" key = {}, value = {}", key, configMap.get(key));
-
+        logger.debug("[ parsed config : {}", LogUtils.getMapContent(configMap));
         bill.addConfigData(configMap);
     }
 
@@ -134,7 +132,7 @@ public class AlipayPaymentService implements PaymentService {
                         (String) config.get("securityKey")));
 
         logger.trace("built parameter map : {}",
-                AlipayHelper.getMapContent(params));
+                LogUtils.getMapContent(params));
 
         return params;
     }

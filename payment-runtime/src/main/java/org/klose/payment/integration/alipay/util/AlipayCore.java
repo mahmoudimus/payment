@@ -1,8 +1,5 @@
 package org.klose.payment.integration.alipay.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.*;
 
 /* *
@@ -17,8 +14,6 @@ import java.util.*;
  */
 
 public class AlipayCore {
-	
-	static Logger log = LoggerFactory.getLogger(AlipayCore.class);
 
     /** 
      * 除去数组中的空值和签名参数

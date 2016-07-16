@@ -3,31 +3,23 @@ package org.klose.payment.constant;
 import java.util.HashMap;
 
 public enum AccountUseType {
-	Collection(1), Payment(2);
-	
-	private int typeId;
-	
-	private static HashMap<Integer, AccountUseType> map = new HashMap<Integer, AccountUseType>();
+    Collection(1), Payment(2);
 
-  static {
-      for (AccountUseType type : AccountUseType.values()) {
-          map.put(type.typeId, type);
-      }
-  }
+    private int typeId;
 
-  public static AccountUseType valueOf(int typeId) {
-      return (AccountUseType) map.get(typeId);
-  }
+    private static HashMap<Integer, AccountUseType> map = new HashMap<>();
 
-	public int getUseTypeId() {
-		return typeId;
-	}
+    static {
+        for (AccountUseType type : AccountUseType.values()) {
+            map.put(type.typeId, type);
+        }
+    }
 
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
-	}
+    public static AccountUseType valueOf(int typeId) {
+        return map.get(typeId);
+    }
 
-	private AccountUseType(int typeId) {
-		this.typeId = typeId;
-	}
+    AccountUseType(int typeId) {
+        this.typeId = typeId;
+    }
 }

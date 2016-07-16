@@ -3,10 +3,6 @@ package org.klose.payment.server.rest.model;
 import javax.ws.rs.FormParam;
 
 public class OrderDto {
-	public static enum bizType {
-		NB
-	};
-
 	@FormParam("accountNo")
 	private String accountNo;
 	@FormParam("bizNo")

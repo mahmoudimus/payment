@@ -11,7 +11,7 @@ public enum PaymentType {
 
 	private int typeId;
 
-	private static HashMap<Integer, PaymentType> map = new HashMap<Integer, PaymentType>();
+	private static HashMap<Integer, PaymentType> map = new HashMap<>();
 
 	static {
 		for (PaymentType type : PaymentType.values()) {
@@ -20,18 +20,15 @@ public enum PaymentType {
 	}
 
 	public static PaymentType valueOf(int typeId) {
-		return (PaymentType) map.get(typeId);
+		return map.get(typeId);
 	}
 
 	public int getTypeId() {
 		return typeId;
 	}
 
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
-	}
 
-	private PaymentType(int typeId) {
+	PaymentType(int typeId) {
 		this.typeId = typeId;
 	}
 }

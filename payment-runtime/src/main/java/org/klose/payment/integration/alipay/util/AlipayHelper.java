@@ -1,9 +1,8 @@
 package org.klose.payment.integration.alipay.util;
 
 import org.klose.payment.common.utils.Assert;
+import org.klose.payment.common.utils.LogUtils;
 import org.klose.payment.integration.alipay.config.AlipayConstant;
-
-
 import org.klose.payment.util.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +30,7 @@ public class AlipayHelper {
 				"%s?service=notify_verify&partner=%s&notify_id=%s", gateway,
 				partner, notifyId);
 
-		String inputLine = "";
+		String inputLine;
 
 		try {
 			URL url = new URL(verifyURL);
@@ -39,7 +38,7 @@ public class AlipayHelper {
 					.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					urlConnection.getInputStream()));
-			inputLine = in.readLine().toString();
+			inputLine = in.readLine();
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			inputLine = "";
@@ -59,22 +58,18 @@ public class AlipayHelper {
 
 		if (logger.isTraceEnabled())
 			logger.trace("start verify signature... [params: "
-					+ getMapContent(params) + " signature = " + signature
+					+ LogUtils.getMapContent(params) + " signature = " + signature
 					+ " secretKey = " + secretKey);
 
 		Map<String, String> filteredParams = AlipayCore.paraFilter(params);
 		String paramsStr = AlipayCore.createLinkString(filteredParams);
 
 		if (logger.isTraceEnabled())
-			logger.trace("[filteredParams: " + getMapContent(filteredParams)
+			logger.trace("[filteredParams: " + LogUtils.getMapContent(filteredParams)
 					+ " paramStr = " + paramsStr);
 
-		if (AlipayConstant.SIGN_TYPE.equals("MD5")) {
-			return MD5Util.verify(paramsStr, signature, secretKey,
-					AlipayConstant.INPUT_CHARSET);
-		}
+		return AlipayConstant.SIGN_TYPE.equals("MD5") && MD5Util.verify(paramsStr, signature, secretKey, AlipayConstant.INPUT_CHARSET);
 
-		return false;
 	}
 
 	public static String md5Sign(Map<String, String> params, String gateway,
@@ -85,13 +80,13 @@ public class AlipayHelper {
 
 		if (logger.isDebugEnabled())
 			logger.debug("build request url... [params: "
-					+ getMapContent(params) + " gateway = " + gateway
+					+ LogUtils.getMapContent(params) + " gateway = " + gateway
 					+ " secretKey = " + secretKey + "]");
 
 		Map<String, String> filteredParams = AlipayCore.paraFilter(params);
 		if (logger.isTraceEnabled())
 			logger.trace("intialized filterParams :"
-					+ getMapContent(filteredParams));
+					+ LogUtils.getMapContent(filteredParams));
 
 		String paramsStr = AlipayCore.createLinkString(filteredParams);
 
@@ -115,7 +110,7 @@ public class AlipayHelper {
 
 		if (logger.isDebugEnabled())
 			logger.debug("verify notification... [params: "
-					+ getMapContent(params) + " gateway = " + gateway
+					+ LogUtils.getMapContent(params) + " gateway = " + gateway
 					+ " partner = " + partner + " secretKey = " + secretKey
 					+ "]");
 		if (params.get("notify_id") != null) {
@@ -132,12 +127,4 @@ public class AlipayHelper {
 		return false;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public static String getMapContent(Map map) {
-		StringBuilder builder = new StringBuilder();
-		for (Object key : map.keySet())
-			builder.append("key = " + key + " value = " + map.get(key) + "\n");
-
-		return builder.toString();
-	}
 }

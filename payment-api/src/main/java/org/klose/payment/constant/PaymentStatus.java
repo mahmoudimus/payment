@@ -3,31 +3,27 @@ package org.klose.payment.constant;
 import java.util.HashMap;
 
 public enum PaymentStatus {
-	Proceed(0), Success(1), Failed(2), Completed(-1);
-	
-	private int statusId;
-	
-	private static HashMap<Integer, PaymentStatus> map = new HashMap<Integer, PaymentStatus>();
+    Proceed(0), Success(1), Failed(2), Completed(-1);
 
-  static {
-      for (PaymentStatus status : PaymentStatus.values()) {
-          map.put(status.statusId, status);
-      }
-  }
+    private int statusId;
 
-  public static PaymentStatus valueOf(int statusId) {
-      return (PaymentStatus) map.get(statusId);
-  }
+    private static HashMap<Integer, PaymentStatus> map = new HashMap<>();
 
-	public int getStatusId() {
-		return statusId;
-	}
+    static {
+        for (PaymentStatus status : PaymentStatus.values()) {
+            map.put(status.statusId, status);
+        }
+    }
 
-	public void setStatusId(int statusId) {
-		this.statusId = statusId;
-	}
+    public static PaymentStatus valueOf(int statusId) {
+        return map.get(statusId);
+    }
 
-	private PaymentStatus(int statusId) {
-		this.statusId = statusId;
-	}
+    public int getStatusId() {
+        return statusId;
+    }
+
+    PaymentStatus(int statusId) {
+        this.statusId = statusId;
+    }
 }

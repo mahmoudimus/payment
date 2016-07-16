@@ -30,49 +30,21 @@ public class ProcessNotificationServiceImpl implements
 
     private ExecutorService threadPool;
 
-    private class CallbackProcessor implements Runnable {
-        PaymentResult paymentResult;
-        String callBackBean;
-
-        public CallbackProcessor(PaymentResult paymentResult,
-                                 String callBackBean) {
-            this.paymentResult = paymentResult;
-            this.callBackBean = callBackBean;
-        }
-
-        public void run() {
-            try {
-                logger.info("Async payment callbackbean invoke start!");
-
-                CallBackAgent agent = ApplicationContextUtils.getBean(
-                        callBackBean, CallBackAgent.class);
-
-                agent.processPaymentCallback(paymentResult);
-
-                logger.info("Async payment callbackbean invoke completed!");
-            } catch (Exception e) {
-                logger.info("Async payment callbackbean invoke Failed!");
-                logger.error(e.getMessage());
-            }
-        }
-    }
-
     @PostConstruct
-    public void initIt() throws Exception {
+    public void init() {
         logger.info("Async Payment-service notification Worker Thread Pool Initialized!");
         threadPool = Executors.newFixedThreadPool(WORKER_THREAD_POOL_SIZE);
     }
 
     @PreDestroy
-    public void cleanUp() throws Exception {
+    public void cleanUp()  {
         threadPool.shutdown();
         try {
             if (!threadPool.awaitTermination(45, TimeUnit.SECONDS)) {
                 threadPool.shutdownNow();
 
                 if (!threadPool.awaitTermination(45, TimeUnit.SECONDS))
-                    System.err
-                            .println("Async Payment notification Worker Thread Pool did not terminate");
+                    logger.error("Async Payment notification Worker Thread Pool did not terminate");
             }
         } catch (InterruptedException ie) {
             threadPool.shutdownNow();
@@ -81,7 +53,7 @@ public class ProcessNotificationServiceImpl implements
     }
 
     @Autowired
-    TransactionDao transactionDao;
+    private TransactionDao transactionDao;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -156,7 +128,6 @@ public class ProcessNotificationServiceImpl implements
                 transaction.getCallBackAgent(), CallBackAgent.class);
 
         if (agent != null) {
-
             logger.info("Notify notification agent: ");
 
             PaymentResult paymentResult = new PaymentResult();
@@ -174,12 +145,10 @@ public class ProcessNotificationServiceImpl implements
 
             agent.processPaymentCallback(paymentResult);
 
-            if (transaction.getStatus().equals(PaymentStatus.Success)) {
+            if (transaction.getStatus() == PaymentStatus.Success.getStatusId()) {
                 transaction.setStatus(PaymentStatus.Completed.getStatusId());
                 transactionDao.save(transaction);
             }
         }
-
-        return;
     }
 }

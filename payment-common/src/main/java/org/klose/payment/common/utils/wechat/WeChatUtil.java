@@ -224,7 +224,7 @@ public class WeChatUtil {
         logger.info("start get oauth token ");
         logger.debug("[appId= {}, code = {} ]", appId, code);
 
-        WeChatOauth2Token wat = null;
+        WeChatOauth2Token wat;
 
         if (!"authdeny".equals(code)) { // 拼接请求地址
             String requestUrl = accessToken
@@ -238,7 +238,7 @@ public class WeChatUtil {
             String content;
             try {
                 content = HttpClientGetUtils.getHttpGetContent(
-                        requestUrl.toString(),
+                        requestUrl,
                         HttpClientConstants.headerValue_form,
                         StandardCharsets.UTF_8.name());
                 Assert.isNotNull(content);
@@ -248,9 +248,9 @@ public class WeChatUtil {
                 logger.trace("json object from response : {}", jsonObject);
 
                 if (jsonObject.get("errcode") != null) {
-                    logger.error("获取网页授权凭证失败 errmsg:{}"
+                    logger.error("获取网页授权凭证失败 errmsg: "
                             + jsonObject.get("errmsg"));
-                    throw new RuntimeException("获取网页授权凭证失败 errmsg:{}"
+                    throw new RuntimeException("获取网页授权凭证失败 errmsg: "
                             + jsonObject.get("errmsg"));
                 } else {
                     wat = new WeChatOauth2Token();
@@ -270,7 +270,7 @@ public class WeChatUtil {
             }
         } else {
             logger.error("not allowed authorzation, code = {}", code);
-            throw new RuntimeException("not allowed authorzation, code ="
+            throw new RuntimeException("not allowed authorzation, code = "
                     + code);
         }
     }

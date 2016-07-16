@@ -27,6 +27,7 @@ public interface TransactionDao extends CrudRepository<TransactionPO, Long> {
 	
 	@Query("SELECT m FROM #{#entityName} m" +
 			 " WHERE m.bizNo=:bizNo and (m.status=1 or m.status=-1)")
-	public TransactionPO findPaidTransactionByBizNo(@Param("bizNo") String bizNo);
+
+    TransactionPO findPaidTransactionByBizNo(@Param("bizNo") String bizNo);
 	
 }

@@ -8,48 +8,38 @@ import java.util.List;
 import java.util.Map;
 
 public class PayFormSubmit {
-	
-	private final static Logger logger = LoggerFactory.getLogger(PayFormSubmit.class);
+    private final static Logger logger = LoggerFactory.getLogger(PayFormSubmit.class);
 
-	public static String buildRequest(String url, Map<String, Object> sParaTemp, String strMethod){
-		return buildRequest(url,sParaTemp,strMethod,"OK");
-	}
+    @SuppressWarnings("unchecked")
+    public static String buildRequest(String url, Map<String, Object> sParaTemp, String strMethod) {
 
-  public static String buildRequest(String url, Map<String, Object> sParaTemp, String strMethod, String strButtonName) {
-  	
-    List<String> keys = new ArrayList<String>(sParaTemp.keySet());
+        List<String> keys = new ArrayList<>(sParaTemp.keySet());
 
-    StringBuffer sbHtml = new StringBuffer();
+        StringBuilder sbHtml = new StringBuilder();
 
-    sbHtml.append("<form id=\"paySubmitForm\" name=\"paySubmitForm\" action=\"" + url
-                  //+ "_input_charset=" + AlipayConfig.input_charset 
-                  + "\" method=\"" + strMethod
-                  + "\">");
+        sbHtml.append("<form id=\"paySubmitForm\" name=\"paySubmitForm\" action=\"").
+                append(url).append("\" method=\"").append(strMethod).append("\">");
 
-    boolean includeSizeFlag = false;
-    Map<String, String> formParaSizes = null;
-    if(sParaTemp.containsKey("formParaSize") ){
-    	formParaSizes = (Map<String, String>) sParaTemp.get("formParaSize");
-    	includeSizeFlag = true;
-    }
-    
-    for (int i = 0; i < keys.size(); i++) {
-        String name = (String) keys.get(i);
-        if( !"formParaSize".equals(name)){
-        	String value = (String) sParaTemp.get(name);
-        	if(includeSizeFlag){
-        		sbHtml.append("<input type=\"hidden\" size=\""+ formParaSizes.get(name+"Size") +"\" name=\"" + name + "\" value=\"" + value + "\"/>");
-        	}else{
-        		sbHtml.append("<input type=\"hidden\" name=\"" + name + "\" value=\"" + value + "\"/>");
-        	}
+        boolean includeSizeFlag = sParaTemp.containsKey("formParaSize");
+        Map<String, String> formParaSizes =
+                (Map<String, String>) sParaTemp.get("formParaSize");
+
+        for (String name : keys) {
+            if (!"formParaSize".equals(name)) {
+                String value = (String) sParaTemp.get(name);
+                if (includeSizeFlag) {
+                    sbHtml.append("<input type=\"hidden\" size=\"").append(formParaSizes.get(name + "Size")).append("\" name=\"").append(name).append("\" value=\"").append(value).append("\"/>");
+                } else {
+                    sbHtml.append("<input type=\"hidden\" name=\"").append(name).append("\" value=\"").append(value).append("\"/>");
+                }
+            }
         }
+
+        //sbHtml.append("<input type=\"submit\" value=\"" + strButtonName + "\" style=\"display:none;\"></form>");
+        sbHtml.append("<script>document.forms['paySubmitForm'].submit();</script></form>");
+
+        logger.debug("html code : \n {}", sbHtml.toString());
+
+        return sbHtml.toString();
     }
-
-    //sbHtml.append("<input type=\"submit\" value=\"" + strButtonName + "\" style=\"display:none;\"></form>");
-    sbHtml.append("<script>document.forms['paySubmitForm'].submit();</script></form>");
-
-    //logger.debug(sbHtml.toString());
-    
-    return sbHtml.toString();
-  }
 }

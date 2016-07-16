@@ -8,6 +8,9 @@ import org.klose.payment.bo.BillingData;
 
 import java.util.Map;
 
+/**
+ * payment proxy
+ */
 public interface PaymentProxy {
 
 	PaymentForm createPayment(BillingData bill) throws Exception;

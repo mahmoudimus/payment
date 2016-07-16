@@ -1,17 +1,19 @@
 package org.klose.payment.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.klose.payment.common.exception.GeneralRuntimeException;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 
 public class MD5Util {
 
 	private static String byteArrayToHexString(byte b[]) {
-		StringBuffer resultSb = new StringBuffer();
-		for (int i = 0; i < b.length; i++)
-			resultSb.append(byteToHexString(b[i]));
+		StringBuilder resultSb = new StringBuilder();
+		for (byte aB : b)
+            resultSb.append(byteToHexString(aB));
 
 		return resultSb.toString();
 	}
@@ -26,9 +28,9 @@ public class MD5Util {
 	}
 
 	public static String MD5Encode(String origin, String charsetname) {
-		String resultString = null;
+		String resultString;
 		try {
-			resultString = new String(origin);
+			resultString = origin;
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			if (charsetname == null || "".equals(charsetname))
 				resultString = byteArrayToHexString(md.digest(resultString
@@ -36,7 +38,8 @@ public class MD5Util {
 			else
 				resultString = byteArrayToHexString(md.digest(resultString
 						.getBytes(charsetname)));
-		} catch (Exception exception) {
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+			throw new GeneralRuntimeException(e);
 		}
 		return resultString;
 	}
@@ -69,12 +72,7 @@ public class MD5Util {
 	public static boolean verify(String text, String sign, String key, String input_charset) {
 		text = text + key;
 		String mysign = DigestUtils.md5Hex(getContentBytes(text, input_charset));
-		if(mysign.equals(sign)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return mysign.equals(sign);
 	}
 
 	/**

@@ -7,7 +7,7 @@ public enum AccountStatus {
 
     private int statusId;
 
-    private static HashMap<Integer, AccountStatus> map = new HashMap<Integer, AccountStatus>();
+    private static HashMap<Integer, AccountStatus> map = new HashMap<>();
 
     static {
         for (AccountStatus status : AccountStatus.values()) {
@@ -16,16 +16,9 @@ public enum AccountStatus {
     }
 
     public static AccountStatus valueOf(int statusId) {
-        return (AccountStatus) map.get(statusId);
+        return map.get(statusId);
     }
 
-    public int getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
-    }
 
     AccountStatus(int statusId) {
         this.statusId = statusId;
