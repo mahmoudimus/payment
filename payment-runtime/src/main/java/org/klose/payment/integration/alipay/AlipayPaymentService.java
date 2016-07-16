@@ -34,8 +34,7 @@ public class AlipayPaymentService implements PaymentService {
             .getLogger(AlipayPaymentService.class);
 
     @Override
-    public PaymentForm generatePaymentData(BillingData bill)
-            throws Exception {
+    public PaymentForm generatePaymentData(BillingData bill) {
         Assert.isNotNull(bill, "billing data cannot be null");
         logger.info("start generate alipay forward view data");
         logger.debug("[billing  : \n {} ]", bill);

@@ -33,7 +33,7 @@ public class PaymentProxyImpl implements PaymentProxy {
     private final static String ERR_MSG_PAYMENT_PAID = "该笔订单已支付完成！ 请勿重复支付！";
 
     @Override
-    public PaymentForm createPayment(BillingData bill) throws Exception {
+    public PaymentForm createPayment(BillingData bill)  {
 
         String bizNo = bill.getBizNo();
         PaymentResult successfulPayment =

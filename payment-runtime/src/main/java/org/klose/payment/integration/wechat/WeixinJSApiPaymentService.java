@@ -41,8 +41,7 @@ public class WeixinJSApiPaymentService implements PaymentService {
     private final static Logger logger = LoggerFactory.getLogger(WeixinJSApiPaymentService.class);
 
     @Override
-    public PaymentForm generatePaymentData(BillingData bill)
-            throws Exception {
+    public PaymentForm generatePaymentData(BillingData bill) {
         Assert.isNotNull(bill);
         logger.info("start generate wechat payment form");
         logger.debug("[billing : \n {}]", bill);

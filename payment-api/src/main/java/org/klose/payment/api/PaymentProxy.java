@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public interface PaymentProxy {
 
-	PaymentForm createPayment(BillingData bill) throws Exception;
+	PaymentForm createPayment(BillingData bill);
 	
 	PaymentResult queryPayment(Long transactionId);
 
