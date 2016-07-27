@@ -4,18 +4,12 @@ package org.klose.payment.integration.alipay;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.klose.payment.AbstractPaymentTest;
 import org.klose.payment.bo.BillingData;
 import org.klose.payment.bo.PaymentForm;
 import org.klose.payment.service.PaymentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -46,7 +40,6 @@ public class AlipayPaymentServiceTest extends AbstractPaymentTest {
     }
 
     @Test
-    @Rollback(true)
     public void test() throws Exception {
         Assert.assertNotNull(service);
         Assert.assertNotNull(data);
