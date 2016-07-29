@@ -2,6 +2,7 @@ package org.klose.payment.integration.bill99;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.apache.commons.lang3.StringUtils;
+import org.klose.payment.integration.bill99.constant.Bill99Constant;
 import org.klose.payment.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,116 +40,15 @@ public class Bill99Helper {
 	@Value("${kuaiqian.merchant.acct.id}")
 	private String merchantAcctId;
 	
-	public static final String INPUT_CHARSET = "1";
-	public static final String VERSION = "v2.0";
-	public static final String LANGUAGE = "1";
-	public static final String PAY_TYPE = "00";
-	public static final String SIGN_TYPE = "4";
 
-	public static String[] REQUEST_PARAMETERS = new String[] {
-		"inputCharset",
-		"pageUrl",
-		"bgUrl",
-		"version",
-		"language",
-		"signType",
-		"merchantAcctId",
-		"payerName",
-		"payerContactType",
-		"payerContact",
-		"payerIdType",
-		"payerId",
-		"payerIP",
-		"orderId",
-		"orderAmount",
-		"orderTime",
-		"orderTimestamp",
-		"productName",
-		"productNum",
-		"productId",
-		"productDesc",
-		"ext1",
-		"ext2",
-		"payType",
-		"bankId",
-		"cardIssuer",
-		"cardNum",
-		"remitType",
-		"remitCode",
-		"redoFlag",
-		"pid",
-		"sibmitType",
-		"orderTimeOut",
-		"extDataType",
-		"extDataContent"
-	};
-	
-	public static String[] RETURN_PARAMETERS = new String[] {
-		"merchantAcctId",
-		"version",
-		"language",
-		"signType",
-		"payType",
-		"bankId",
-		"orderId",
-		"orderTime",
-		"orderAmount",
-		"bindCard",
-		"bindMobile",
-		"dealId",
-		"bankDealId",
-		"dealTime",
-		"payAmount",
-		"fee",
-		"ext1",
-		"ext2",
-		"payResult",
-		"errCode"	
-	};
 	
 	private PrivateKey privateKey;
 	private PublicKey publicKey;
 	
 	Logger log = LoggerFactory.getLogger(Bill99Helper.class);
 	
-	public Map<String, String> buildPaymentRequestParams(
-			String orderId, String orderAmount, String redirectURL, String callbackURL, String productName, 
-			String productNum, String productDesc, String productId, String channelCode) throws UnsupportedEncodingException {
-				
-		
-		Map<String, String> params = new LinkedHashMap<String, String>();
-		
-		params.put("inputCharset", Bill99Helper.INPUT_CHARSET);
-
-		params.put("pageUrl", String.format("%s?channelCode=%s&quotationNumber=%s",
-				redirectURL, channelCode, orderId));
-		
-		params.put("bgUrl", callbackURL);
-
-		params.put("version", Bill99Helper.VERSION);
-		params.put("language", Bill99Helper.LANGUAGE);
-		params.put("signType", Bill99Helper.SIGN_TYPE);
-		params.put("merchantAcctId", merchantAcctId);
-		
-		params.put("orderId", orderId); // quotation number
-		params.put("orderAmount", orderAmount);
-		params.put("orderTime", DateUtil.format(new Date(),
-			DateUtil.DATE_TIME_FORMAT_COMPACT_S));
-		
-		params.put("productName", productName);
-		params.put("productNum", productNum);
-		params.put("productDesc", productDesc);
-		
-		params.put("ext1", channelCode);
-		params.put("ext2", productId);
-
-		params.put("payType", Bill99Helper.PAY_TYPE);
-		
-		return params;
-	}
-	
 	public boolean verify(Map<String, String> params) {
-		String signContent = createLinkedString(params, RETURN_PARAMETERS);
+		String signContent = createLinkedString(params, Bill99Constant.RETURN_PARAMETERS);
 		String expectedSignature = params.get("signMsg");
 		
 		try {
@@ -169,7 +69,7 @@ public class Bill99Helper {
 	}
 	
 	public String sign(Map<String, String> params) {
-		String content = createLinkedString(params, REQUEST_PARAMETERS);
+		String content = createLinkedString(params, Bill99Constant.REQUEST_PARAMETERS);
 		
 		try {
 			PrivateKey privateKey = getPrivateKey();
