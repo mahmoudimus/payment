@@ -1,7 +1,6 @@
 package org.klose.payment.integration.bill99;
 
 
-import org.json.simple.JSONObject;
 import org.klose.payment.bo.BillingData;
 import org.klose.payment.bo.PaymentForm;
 import org.klose.payment.common.utils.Assert;
@@ -12,26 +11,20 @@ import org.klose.payment.integration.bill99.constant.Bill99Constant;
 import org.klose.payment.service.AccountService;
 import org.klose.payment.service.PaymentService;
 import org.klose.payment.service.TransactionDataService;
-import org.klose.payment.util.DateUtil;
+import org.klose.payment.common.utils.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 
-@Component("Bill99PaymentService")
+@Component("bill99PaymentService")
 public class Bill99PaymentService implements PaymentService {
-
-    @Autowired
-    private Bill99Helper helper;
     @Autowired
     private TransactionDataService transactionService;
     @Autowired
@@ -90,12 +83,14 @@ public class Bill99PaymentService implements PaymentService {
         // 服务器接收分账结果的后台地址
         String hostEndpoint = bill.getContextPath();
         Assert.isNotNull(hostEndpoint);
-        final String PATH_NOTIFY_API = "/api/99bill/notifications";
-        params.put("bgUrl", hostEndpoint.concat(PATH_NOTIFY_API));
+        //final String PATH_NOTIFY_API = "/api/99bill/notifications";
+        //params.put("bgUrl", hostEndpoint.concat(PATH_NOTIFY_API));
+        //for test
+        params.put("bgUrl", "http://requestb.in/y20pycy2");
         // 服务器回调前台地址
-        String pageUrl = hostEndpoint.concat(PaymentConstant.GENERAL_RETURN_PROXY_PATH)
+        String pageUrl = hostEndpoint.concat(PaymentConstant.GENERAL_RETURN_PROXY_PATH).concat("?transId=")
                 .concat(transId.toString());
-
+        //params.put("pageUrl", pageUrl);
         params.put("merchantAcctId", (String) bill.getConfigData().get("merchantAcctId"));
 
         params.put("orderId", bill.getBizNo()); // quotation number
@@ -111,8 +106,12 @@ public class Bill99PaymentService implements PaymentService {
         params.put("ext2", (String) bill.getExtData().get("productId"));
         params.put("payType", Bill99Constant.PAY_TYPE);
 
-//        requestData.put("signMsg", signature);
-
+        String signature = Bill99Helper.sign(params, (String)bill.getConfigData().get("privateKeyPath"),
+                (String)bill.getConfigData().get("privateKeyPassword"));
+        Assert.isNotNull(signature);
+        params.put("signMsg", signature);
         return params;
     }
+
+
 }

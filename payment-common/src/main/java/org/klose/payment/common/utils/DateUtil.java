@@ -1,4 +1,4 @@
-package org.klose.payment.util;
+package org.klose.payment.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -3,7 +3,6 @@ package org.klose.payment.integration.bill99.rest;
 import org.klose.payment.integration.bill99.Bill99Helper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ import java.util.Map;
 @Path("bill99")
 @Component
 public class Bill99NotificationResource {
-	@Autowired
 	private Bill99Helper helper;
 
 	private final static Logger logger = LoggerFactory.getLogger(Bill99NotificationResource.class);

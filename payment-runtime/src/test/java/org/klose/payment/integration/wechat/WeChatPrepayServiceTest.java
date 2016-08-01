@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.klose.payment.AbstractPaymentTest;
 import org.klose.payment.integration.wechat.constant.WeChatConstant;
 import org.klose.payment.integration.wechat.dto.WechatPrepayResponseDto;
-import org.klose.payment.util.ParamUtils;
+import org.klose.payment.common.utils.ParamUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

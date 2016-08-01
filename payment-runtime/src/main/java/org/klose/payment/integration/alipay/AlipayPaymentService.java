@@ -13,7 +13,7 @@ import org.klose.payment.integration.alipay.util.AlipayHelper;
 import org.klose.payment.service.AccountService;
 import org.klose.payment.service.PaymentService;
 import org.klose.payment.service.TransactionDataService;
-import org.klose.payment.util.ParamUtils;
+import org.klose.payment.common.utils.ParamUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

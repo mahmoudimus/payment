@@ -15,7 +15,7 @@ import org.klose.payment.po.AccountPO;
 import org.klose.payment.po.TransactionPO;
 import org.klose.payment.service.AccountService;
 import org.klose.payment.service.notification.ProcessNotificationService;
-import org.klose.payment.util.MD5Util;
+import org.klose.payment.common.utils.sign.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

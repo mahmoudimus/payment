@@ -49,6 +49,9 @@ public class MockPaymentIntegrationServiceImpl implements
      * @param data: order data
      */
     protected void prepareExtensionData(BillingData data) {
+        data.addExtData("productId", "testProduct");
+        data.addExtData("channelCode", "testChannel");
+        data.addExtData("productCode", "test product code");
     }
 
     @Override
