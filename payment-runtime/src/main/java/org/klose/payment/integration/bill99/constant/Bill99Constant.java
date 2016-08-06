@@ -1,8 +1,5 @@
 package org.klose.payment.integration.bill99.constant;
 
-/**
- * Created by klose.wu on 7/27/16.
- */
 public interface Bill99Constant {
 
     String INPUT_CHARSET = "1";
@@ -71,4 +68,15 @@ public interface Bill99Constant {
             "payResult",
             "errCode"
     };
+
+    String PATH_NOTIFY_API = "/api/payment/bill99/notifications";
+
+    String NOTIFY_RESPONSE_MSG =
+            "<result>%d</result><redirecturl>%s</redirecturl>";
+
+    String PARAM_KEY_RESULT= "payResult";
+
+    String PARAM_KEY_DEAL_ID= "dealId";
+
+    String PAYMENT_SUCCESS_CODE = "10";
 }

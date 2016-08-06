@@ -1,6 +1,7 @@
 package org.klose.payment.integration.bill99;
 
 import org.klose.payment.common.utils.Assert;
+import org.klose.payment.common.utils.LogUtils;
 import org.klose.payment.common.utils.ParamUtils;
 import org.klose.payment.common.utils.sign.SHA1withRSAUtils;
 import org.klose.payment.integration.bill99.constant.Bill99Constant;
@@ -14,26 +15,22 @@ public class Bill99Helper {
 
     private final static Logger logger = LoggerFactory.getLogger(Bill99Helper.class);
 
-//	public boolean verify(Map<String, String> params) {
-//		String signContent = createLinkedString(params, Bill99Constant.RETURN_PARAMETERS);
-//		String expectedSignature = params.get("signMsg");
-//
-//		try {
-//			PublicKey publicKey = getPublicKey();
-//
-//			Signature signature = Signature.getInstance("SHA1withRSA");
-//			signature.initVerify(publicKey);
-//			signature.update(signContent.getBytes());
-//
-//			byte[] decodedExpectedSignature = Base64.decode(expectedSignature);
-//			boolean verifyResult = signature.verify(decodedExpectedSignature);
-//
-//			return verifyResult;
-//		} catch (Exception e) {
-//			log.error(e.getMessage());
-//			throw new RuntimeException(e.getMessage());
-//		}
-//	}
+    public static boolean verify(Map<String, String> params, String publicKeyPath) {
+        Assert.isNotNull(params);
+        Assert.isNotNull(publicKeyPath);
+        logger.info("start verify 99bill payment response");
+        logger.debug("[publicKeyPath = {} \n, params : {} ]",
+                publicKeyPath, LogUtils.getMapContent(params));
+
+        String signStr = ParamUtils.buildParams(params, Bill99Constant.RETURN_PARAMETERS);
+        String receivedSign = params.get("signMsg");
+        logger.trace("signStr = {}, received sign = {}",
+                signStr, receivedSign);
+        boolean result = SHA1withRSAUtils.enCodeByCer(publicKeyPath, "UTF-8", signStr, receivedSign);
+        logger.debug("[result = {}]", result);
+        return result;
+
+    }
 
     public static String sign(Map<String, String> map,
                               String privateKeyPath, String privateKeyPassword) {
