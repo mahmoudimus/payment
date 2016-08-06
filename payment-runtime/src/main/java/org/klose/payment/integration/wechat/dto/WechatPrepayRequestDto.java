@@ -1,7 +1,7 @@
 package org.klose.payment.integration.wechat.dto;
 
-import org.klose.payment.util.MD5Util;
-import org.klose.payment.util.ParamUtils;
+import org.klose.payment.common.utils.sign.MD5Util;
+import org.klose.payment.common.utils.ParamUtils;
 
 
 import java.util.SortedMap;

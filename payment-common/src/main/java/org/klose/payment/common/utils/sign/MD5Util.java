@@ -1,4 +1,4 @@
-package org.klose.payment.util;
+package org.klose.payment.common.utils.sign;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.klose.payment.common.exception.GeneralRuntimeException;

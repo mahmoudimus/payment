@@ -1,4 +1,4 @@
-package org.klose.payment.util;
+package org.klose.payment.common.utils;
 
 
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +26,24 @@ public class ParamUtils {
 			}
 		}
 		return sb.toString();
+	}
+
+	@SuppressWarnings("rawtypes")
+	public static String buildParams(Map<String, String> params, String[] keys) {
+		Assert.isNotNull(params);
+		Assert.isNotNull(keys);
+
+		StringBuilder builder = new StringBuilder();
+		for (String paramName : keys) {
+			String paramValue = params.get(paramName);
+			if (!StringUtils.isEmpty(paramValue)) {
+				if (builder.length() > 0)
+					builder.append("&");
+
+				builder.append(paramName).append("=").append(paramValue);
+			}
+		}
+		return builder.toString();
 	}
 
 	/**
@@ -56,4 +74,5 @@ public class ParamUtils {
 		}
 		return order;
 	}
+
 }

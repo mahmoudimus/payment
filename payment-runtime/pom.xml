@@ -45,6 +45,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
 </project>

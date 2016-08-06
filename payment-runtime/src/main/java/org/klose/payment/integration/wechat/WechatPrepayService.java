@@ -13,7 +13,7 @@ import org.klose.payment.common.utils.http.HttpClientPostUtils;
 import org.klose.payment.integration.wechat.constant.WeChatConstant;
 import org.klose.payment.integration.wechat.dto.WechatPrepayRequestDto;
 import org.klose.payment.integration.wechat.dto.WechatPrepayResponseDto;
-import org.klose.payment.util.DateUtil;
+import org.klose.payment.common.utils.DateUtil;
 import org.klose.payment.util.ValidateCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

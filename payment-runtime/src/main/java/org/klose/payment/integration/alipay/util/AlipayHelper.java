@@ -3,7 +3,7 @@ package org.klose.payment.integration.alipay.util;
 import org.klose.payment.common.utils.Assert;
 import org.klose.payment.common.utils.LogUtils;
 import org.klose.payment.integration.alipay.config.AlipayConstant;
-import org.klose.payment.util.MD5Util;
+import org.klose.payment.common.utils.sign.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

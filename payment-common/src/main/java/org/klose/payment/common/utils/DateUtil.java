@@ -1,4 +1,4 @@
-package org.klose.payment.util;
+package org.klose.payment.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -17,6 +17,7 @@ public class DateUtil {
 	public static final String DATE_KEY_STR = "yyMMddHHmmss";
 	public static final String DATE_KEY_LONG_STR = "yyyyMMddHHmmss";
 	public static final String DATE_WHOLE_FULL_STR = "yyyyMMddHHmmssS";
+	public final static String DATE_TIME_FORMAT_COMPACT_S = "yyyyMMddHHmmss";
 
 	public static Date parse(String strDate) {
 		return parse(strDate, DATE_FULL_STR);
