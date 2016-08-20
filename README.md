@@ -22,16 +22,16 @@
 * payment-common:　一系列基础库，例如签名，日期，日志等
 
 * payment-api: 定义一系列接口, 会在payment-server代码中被调用　
-1. `org.klose.payment.api.PaymentProxy`:　创建，更新支付信息，查询支付账户配置等
-2. `org.klose.payment.api.CallBackAgent`: 后台回调中的业务逻辑
+`org.klose.payment.api.PaymentProxy`:　创建，更新支付信息，查询支付账户配置等
+`org.klose.payment.api.CallBackAgent`: 后台回调中的业务逻辑
 
-* payment-runtime: ｀PaymentProxy｀接口的实现　
-1. `org.klose.payment.integration`:　主要实现各大支付平台发送数据和后台调用逻辑
+* payment-runtime: ｀PaymentProxy｀接口的实现
+`org.klose.payment.integration`:　主要实现各大支付平台发送数据和后台调用逻辑
 
 * payment-server: 页面jsp代码和restful服务
-1. `testPay.jsp`：是主入口，调用`PaymentResource#createPayment`
-2. `paymentForm.jsp`：发送支付表单给第三方支付
-3. `paymentResult.jsp`：一个简单展示前台回调的默认实现
+`testPay.jsp`：是主入口，调用`PaymentResource#createPayment`
+`paymentForm.jsp`：发送支付表单给第三方支付
+`paymentResult.jsp`：一个简单展示前台回调的默认实现
 
 
 ### 客户化：
