@@ -1,13 +1,13 @@
 # payment-gateway
 ## 目标
-和支付宝，微信JS，快钱等第三方支付进行集成，单独部署的支付网关，用于浏览器内的支付集成
+在浏览器内和支付宝，微信JS，快钱等第三方支付进行集成的支付网关服务器
 
 ## 设计
 
-### 配置
-* t_payment_ext_conf表用于保存客户化的prepay callback的spring bean名称
-* t_payment_account表用于保存支付账户的配置信息
-* t_payment_transaction表用于保存每笔订单的实例信息
+### 数据库
+* t_payment_ext_conf：支付账户相关的支付前准备数据，支付后后台回调中业务处理的spring bean配置
+* t_payment_account：支付账户的配置信息
+* t_payment_transaction：每笔订单的实例信息
 
 ### 流程
 1. 在数据库配置支付帐号相关信息
@@ -29,7 +29,7 @@
 1. `org.klose.payment.integration`:　主要实现各大支付平台发送数据和后台调用逻辑
 
 * payment-server: 页面jsp代码和restful服务
-1. `testPay.jsp`：是主入口，调用｀org.klose.payment.server.rest.PaymentResource#createPayment｀这个restful服务
+1. `testPay.jsp`：是主入口，调用`PaymentResource#createPayment`
 2. `paymentForm.jsp`：发送支付表单给第三方支付
 3. `paymentResult.jsp`：一个简单展示前台回调的默认实现
 
