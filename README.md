@@ -1,45 +1,45 @@
-# payment
-## Ä¿±ê
-ºÍÖ§¸¶±¦£¬Î¢ĞÅJS£¬¿ìÇ®µÈµÚÈı·½Ö§¸¶½øĞĞ¼¯³É£¬µ¥¶À²¿ÊğµÄÖ§¸¶Íø¹Ø£¬ÓÃÓÚä¯ÀÀÆ÷ÄÚµÄÖ§¸¶¼¯³É
+# payment-gateway
+## ç›®æ ‡
+åœ¨æµè§ˆå™¨å†…å’Œæ”¯ä»˜å®ï¼Œå¾®ä¿¡JSï¼Œå¿«é’±ç­‰ç¬¬ä¸‰æ–¹æ”¯ä»˜è¿›è¡Œé›†æˆçš„æ”¯ä»˜ç½‘å…³æœåŠ¡å™¨
 
-## Éè¼Æ
+## è®¾è®¡
 
-### ÅäÖÃ
-t_payment_ext_conf±íÓÃÓÚ±£´æ¿Í»§»¯µÄprepay callbackµÄspring beanÃû³Æ
-t_payment_account±íÓÃÓÚ±£´æÖ§¸¶ÕË»§µÄÅäÖÃĞÅÏ¢
-t_payment_transaction±íÓÃÓÚ±£´æÃ¿±Ê¶©µ¥µÄÊµÀıĞÅÏ¢
+### æ•°æ®åº“
+* t_payment_ext_confï¼šæ”¯ä»˜è´¦æˆ·ç›¸å…³çš„æ”¯ä»˜å‰å‡†å¤‡æ•°æ®ï¼Œæ”¯ä»˜ååå°å›è°ƒä¸­ä¸šåŠ¡å¤„ç†çš„spring beané…ç½®
+* t_payment_accountï¼šæ”¯ä»˜è´¦æˆ·çš„é…ç½®ä¿¡æ¯
+* t_payment_transactionï¼šæ¯ç¬”è®¢å•çš„å®ä¾‹ä¿¡æ¯
 
-### Á÷³Ì
-1. ÔÚÊı¾İ¿âÅäÖÃÖ§¸¶ÕÊºÅÏà¹ØĞÅÏ¢
-2. ¸ù¾İÉÌÆ·¶©µ¥ĞÅÏ¢£¬Ç©Ãûºó£¬²úÉúhtml±íµ¥
-3. Í¨¹ıhttp»òÕßhttps·¢ËÍ¸ø¸÷´óÖ§¸¶Æ½Ì¨
-4. Ò³ÃæÌø×ªµ½¸÷´óÖ§¸¶Æ½Ì¨½øĞĞÖ§¸¶
-5. Ö§¸¶Íê³Éºó½øĞĞÇ°Ì¨ºÍºóÌ¨»Øµ÷
-6. Ç°Ì¨»Øµ÷Ö÷ÒªÓÃÓÚÕ¹Ê¾Ö§¸¶½á¹û
-7. ºóÌ¨»Øµ÷Ö÷ÒªÓÃÓÚ½»Ò×Íê³É
+### æµç¨‹
+1. åœ¨æ•°æ®åº“é…ç½®æ”¯ä»˜å¸å·ç›¸å…³ä¿¡æ¯
+2. æ ¹æ®å•†å“è®¢å•ä¿¡æ¯ï¼Œç­¾ååï¼Œäº§ç”Ÿhtmlè¡¨å•
+3. é€šè¿‡httpæˆ–è€…httpså‘é€ç»™å„å¤§æ”¯ä»˜å¹³å°
+4. é¡µé¢è·³è½¬åˆ°å„å¤§æ”¯ä»˜å¹³å°è¿›è¡Œæ”¯ä»˜
+5. æ”¯ä»˜å®Œæˆåè¿›è¡Œå‰å°å’Œåå°å›è°ƒ
+6. å‰å°å›è°ƒä¸»è¦ç”¨äºå±•ç¤ºæ”¯ä»˜ç»“æœ
+7. åå°å›è°ƒä¸»è¦ç”¨äºäº¤æ˜“å®Œæˆ
 
-### ´úÂë×éÖ¯£º
-* payment-common:¡¡Ò»ÏµÁĞ»ù´¡¿â£¬ÀıÈçÇ©Ãû£¬ÈÕÆÚ£¬ÈÕÖ¾µÈ
+### ä»£ç ç»„ç»‡ï¼š
+* payment-common:ã€€ä¸€ç³»åˆ—åŸºç¡€åº“ï¼Œä¾‹å¦‚ç­¾åï¼Œæ—¥æœŸï¼Œæ—¥å¿—ç­‰
 
-* payment-api: ¶¨ÒåÒ»ÏµÁĞ½Ó¿Ú, »áÔÚpayment-server´úÂëÖĞ±»µ÷ÓÃ¡¡
-** `org.klose.payment.api.PaymentProxy`:¡¡´´½¨£¬¸üĞÂÖ§¸¶ĞÅÏ¢£¬²éÑ¯Ö§¸¶ÕË»§ÅäÖÃµÈ
-** `org.klose.payment.api.CallBackAgent`: ºóÌ¨»Øµ÷ÖĞµÄÒµÎñÂß¼­
+* payment-api: å®šä¹‰ä¸€ç³»åˆ—æ¥å£, ä¼šåœ¨payment-serverä»£ç ä¸­è¢«è°ƒç”¨ã€€
+`org.klose.payment.api.PaymentProxy`:ã€€åˆ›å»ºï¼Œæ›´æ–°æ”¯ä»˜ä¿¡æ¯ï¼ŒæŸ¥è¯¢æ”¯ä»˜è´¦æˆ·é…ç½®ç­‰  
+`org.klose.payment.api.CallBackAgent`: åå°å›è°ƒä¸­çš„ä¸šåŠ¡é€»è¾‘  
 
-* payment-runtime: £àPaymentProxy£à½Ó¿ÚµÄÊµÏÖ¡¡
-** `org.klose.payment.integration`:¡¡Ö÷ÒªÊµÏÖ¸÷´óÖ§¸¶Æ½Ì¨·¢ËÍÊı¾İºÍºóÌ¨µ÷ÓÃÂß¼­
+* payment-runtime: ï½€PaymentProxyï½€æ¥å£çš„å®ç°   
+`org.klose.payment.integration`:ã€€ä¸»è¦å®ç°å„å¤§æ”¯ä»˜å¹³å°å‘é€æ•°æ®å’Œåå°è°ƒç”¨é€»è¾‘
 
-* payment-server: Ò³Ãæjsp´úÂëºÍrestful·şÎñ
-** `testPay.jsp`£ºÊÇÖ÷Èë¿Ú£¬µ÷ÓÃ£àorg.klose.payment.server.rest.PaymentResource#createPayment£àÕâ¸örestful·şÎñ
-** `paymentForm.jsp`£º·¢ËÍÖ§¸¶±íµ¥¸øµÚÈı·½Ö§¸¶
-** `paymentResult.jsp`£ºÒ»¸ö¼òµ¥Õ¹Ê¾Ç°Ì¨»Øµ÷µÄÄ¬ÈÏÊµÏÖ
+* payment-server: é¡µé¢jspä»£ç å’ŒrestfulæœåŠ¡   
+`testPay.jsp`ï¼šæ˜¯ä¸»å…¥å£ï¼Œè°ƒç”¨`PaymentResource#createPayment`  
+`paymentForm.jsp`ï¼šå‘é€æ”¯ä»˜è¡¨å•ç»™ç¬¬ä¸‰æ–¹æ”¯ä»˜  
+`paymentResult.jsp`ï¼šä¸€ä¸ªç®€å•å±•ç¤ºå‰å°å›è°ƒçš„é»˜è®¤å®ç°  
 
 
-### ¿Í»§»¯£º
+### å®¢æˆ·åŒ–ï¼š
 
-ÊµÏÖ'org.klose.payment.server.prepare.PaymentIntegrationService'£º×¼±¸ÉÌÆ·£¬¼Û¸ñ£¬¶©µ¥µÈ¸÷ÖÖĞÅÏ¢
-ÊµÏÖ'org.klose.payment.api.CallBackAgent'£ººóÌ¨»Øµ÷ÖĞ¡°Íê³ÉÒµÎñÊÂÎï½»Ò×¡±
+å®ç°'org.klose.payment.server.prepare.PaymentIntegrationService'ï¼šå‡†å¤‡å•†å“ï¼Œä»·æ ¼ï¼Œè®¢å•ç­‰å„ç§ä¿¡æ¯
+å®ç°'org.klose.payment.api.CallBackAgent'ï¼šåå°å›è°ƒä¸­â€œå®Œæˆä¸šåŠ¡äº‹ç‰©äº¤æ˜“â€
 
 
 ## License
-Copyright Â© 2016 
+Copyright Â©  2016 
 Distributed under the Appache Public License version 2.0
