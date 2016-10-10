@@ -57,14 +57,15 @@ public class SHA1withRSAUtils {
 		return base64;
 	}
 
+
 	/**
-	 * 验证
-	 * 
-	 * @param
-	 * @param
-	 * @param
-	 * @return
-	 */
+	 * 校验签名
+	 * @param publicFilePath 证书路径
+	 * @param encoding 编码方式
+	 * @param paramStr 加密字符串
+	 * @param signStr 签名
+     * @return
+     */
 	public static boolean enCodeByCer(String publicFilePath, String encoding,
 			String paramStr, String signStr) {
 
