@@ -5,8 +5,12 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.klose.payment.common.exception.GeneralRuntimeException;
 import org.klose.payment.common.utils.Assert;
 import org.slf4j.Logger;
@@ -14,8 +18,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
@@ -124,5 +132,48 @@ public class HttpUtils {
         } finally {
             httpClient.close();
         }
+    }
+
+    public static StringEntity transformParameter(
+            Map<String, List<String>> params, String encoding) {
+        StringEntity entity = null;
+        if (params != null && !params.isEmpty()) {
+            List<NameValuePair> nvps = new ArrayList<>();
+            for (String key : params.keySet()) {
+                for (String value : params.get(key))
+                    nvps.add(new BasicNameValuePair(key, value));
+
+            }
+            try {
+                entity = new UrlEncodedFormEntity(nvps,
+                        encoding == null ? HttpClientConstants.DEFAULT_ENCODING : encoding);
+            } catch (UnsupportedEncodingException e) {
+                logger.error(
+                        "transform post parameter to string entity throws UnsupportedEncodingException ",
+                        e);
+                throw new RuntimeException(e);
+            }
+        }
+
+        return entity;
+    }
+
+    public static String concatParams(final String url,
+                                      final Map<String, List<String>> params) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(url);
+        sb.append("?");
+        if (params != null) {
+            for (String key : params.keySet()) {
+                for (String value : params.get(key)) {
+                    sb.append(key);
+                    sb.append("=");
+                    sb.append(value);
+                    sb.append("&");
+                }
+            }
+            return sb.substring(0, sb.length() - 1);
+        } else
+            return url;
     }
 }

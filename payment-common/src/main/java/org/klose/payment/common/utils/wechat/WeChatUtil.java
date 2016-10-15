@@ -65,7 +65,7 @@ public class WeChatUtil {
         String content;
         try {
             content = HttpClientGetUtils.getHttpGetContent(url.toString(),
-                    HttpClientConstants.headerValue_form,
+                    HttpClientConstants.HEADER_VALUE_FORM,
                     StandardCharsets.UTF_8.name());
 
             Assert.isNotNull(content);
@@ -137,7 +137,7 @@ public class WeChatUtil {
         String content;
         try {
             content = HttpClientGetUtils.getHttpGetContent(url.toString(),
-                    HttpClientConstants.headerValue_form,
+                    HttpClientConstants.HEADER_VALUE_FORM,
                     StandardCharsets.UTF_8.name());
             Assert.isNotNull(content);
 
@@ -239,7 +239,7 @@ public class WeChatUtil {
             try {
                 content = HttpClientGetUtils.getHttpGetContent(
                         requestUrl,
-                        HttpClientConstants.headerValue_form,
+                        HttpClientConstants.HEADER_VALUE_FORM,
                         StandardCharsets.UTF_8.name());
                 Assert.isNotNull(content);
                 logger.trace("response of get oauth token : {}", content);
