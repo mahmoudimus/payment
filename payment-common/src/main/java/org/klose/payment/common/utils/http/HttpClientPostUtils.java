@@ -72,10 +72,7 @@ public class HttpClientPostUtils {
         return nvps;
     }
 
-    /**
-     * @param POSTParameters
-     * @return
-     */
+
     private static Map<String, String> convertPOSTParametersToNVP(
             String POSTParameters) {
         Map<String, String> nvps = new LinkedHashMap<>();

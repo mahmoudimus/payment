@@ -54,7 +54,7 @@ class WechatPrepayService {
         String content = HttpClientPostUtils.getHttpPostContentByEntity(
                 WeChatConstant.CREATE_ORDER_URL,
                 new StringEntity(wechatXml, StandardCharsets.UTF_8.name()),
-                HttpClientConstants.headerValue_form, StandardCharsets.UTF_8.name());
+                HttpClientConstants.HEADER_VALUE_FORM, StandardCharsets.UTF_8.name());
 
         logger.info("WX Prepay Response: {} ", content.getBytes("UTF-8"));
 

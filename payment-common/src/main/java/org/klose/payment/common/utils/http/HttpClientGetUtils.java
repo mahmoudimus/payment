@@ -28,8 +28,8 @@ public class HttpClientGetUtils {
                                            String encoding) throws IOException {
         HttpGet hg = new HttpGet(url);
         RequestConfig requestConfig = RequestConfig.custom()
-                .setSocketTimeout(HttpClientConstants.socketTimeout)
-                .setConnectTimeout(HttpClientConstants.connectTimeout).build();// 设置请求和传输超时时�?
+                .setSocketTimeout(HttpClientConstants.SOCKET_TIMEOUT)
+                .setConnectTimeout(HttpClientConstants.CONNECT_TIMEOUT).build();// 设置请求和传输超时时�?
         hg.setConfig(requestConfig);
         hg.setHeader(HTTP.CONTENT_TYPE, contentType);
         return HttpUtils.executeHttpRequest(initHttpClient(), hg, encoding);
