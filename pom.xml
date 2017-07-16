@@ -17,9 +17,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>4.1.6.RELEASE</spring.version>
-        <spring.data.version>1.4.2.RELEASE</spring.data.version>
-        <spring.boot.version>1.2.4.RELEASE</spring.boot.version>
+        <spring.version>4.2.5.RELEASE</spring.version>
+        <spring.data.version>1.10.2.RELEASE</spring.data.version>
+        <spring.boot.version>1.2.7.RELEASE</spring.boot.version>
         <spring.security.version>3.2.7.RELEASE</spring.security.version>
         <aspectj.version>1.8.7</aspectj.version>
         <slf4j.version>1.7.5</slf4j.version>
@@ -102,11 +102,6 @@
                 <artifactId>spring-expression</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-commons</artifactId>
-                <version>1.6.0.RELEASE</version>
-            </dependency>
 
             <dependency>
                 <groupId>org.springframework.data</groupId>
@@ -124,15 +119,11 @@
                 <artifactId>spring-security-config</artifactId>
                 <version>${spring.security.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-web</artifactId>
                 <version>${spring.security.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.amqp</groupId>
-                <artifactId>spring-rabbit</artifactId>
-                <version>1.5.3.RELEASE</version>
             </dependency>
 
             <dependency>

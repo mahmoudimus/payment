@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:application-context.xml.bak"})
+@ContextConfiguration(locations = {"classpath*:application-context.xml"})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
 public class MockPaymentIntegrationTest {

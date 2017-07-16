@@ -45,9 +45,9 @@ public class TransactionPO implements Serializable {
 	@Column
 	private Integer status;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	@Lob
-	@Basic(fetch = FetchType.LAZY)
+//	@Basic(fetch = FetchType.LAZY)
 	private String messageLog;
 
 	@Column
