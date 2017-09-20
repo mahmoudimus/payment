@@ -23,6 +23,8 @@ buildNumber.properties
 
 .idea/ 
 
+.vscode/ 
+
 *.iml
 
 *.classpath
