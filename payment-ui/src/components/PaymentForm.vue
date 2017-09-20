@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { submitPayment } from '../api/api.js'
 export default {
   name: 'PaymentForm',
   data () {
@@ -19,7 +20,7 @@ export default {
   },
   methods: {
     submitPay () {
-      this.msg = 100
+      this.msg = submitPayment('aaa')
     }
   }
 }
