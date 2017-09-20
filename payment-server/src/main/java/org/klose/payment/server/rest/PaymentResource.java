@@ -12,13 +12,15 @@ import org.klose.payment.constant.FrontPageForwardType;
 import org.klose.payment.constant.PaymentConstant;
 import org.klose.payment.constant.PaymentType;
 import org.klose.payment.integration.wechat.constant.WeChatConstant;
+import org.klose.payment.server.prepare.PaymentIntegrationService;
 import org.klose.payment.server.rest.model.OrderDto;
 import org.klose.payment.service.PaymentExtensionConfService;
-import org.klose.payment.server.prepare.PaymentIntegrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,8 +32,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-@Path("/payment")
-@Component
+@RequestMapping(value = "/payment")
+@RestController
 public class PaymentResource {
 
     private final static Logger logger = LoggerFactory.getLogger(PaymentResource.class);
@@ -139,7 +141,7 @@ public class PaymentResource {
         data.setReturnURL(returnURL);
 
         //special handle for wechat js api
-        if(accountInfo.getType().equals(PaymentType.WX_JSAPI)) {
+        if (accountInfo.getType().equals(PaymentType.WX_JSAPI)) {
             data.addExtData(WeChatConstant.KEY_WEIXIN_PRODUCT_ID, "test product");
             data.addExtData(WeChatConstant.KEY_WEIXIN_OPENID, request.getAttribute(WeChatConstant.KEY_WEIXIN_OPENID));
         }
@@ -212,5 +214,9 @@ public class PaymentResource {
         return Response.temporaryRedirect(new URI(returnURL)).build();
     }
 
+    @RequestMapping(value = "/health", method = RequestMethod.GET)
+    public String health() {
+        return "payment service is running";
+    }
 
 }
