@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { submitPayment } from '../api/api.js'
+import { checkHealth } from '../api/api.js'
 export default {
   name: 'PaymentForm',
   data () {
@@ -20,7 +20,11 @@ export default {
   },
   methods: {
     submitPay () {
-      this.msg = submitPayment('aaa')
+      checkHealth().then(res => {
+        console.log(res.data)
+        this.msg = res.data
+        return
+      })
     }
   }
 }
