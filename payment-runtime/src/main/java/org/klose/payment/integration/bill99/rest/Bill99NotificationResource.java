@@ -12,28 +12,27 @@ import org.klose.payment.service.AccountService;
 import org.klose.payment.service.notification.ProcessNotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-@Path("payment/bill99")
-@Component
+import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
+
+@RequestMapping(value = "payment/bill99")
+@RestController
 public class Bill99NotificationResource {
 
-    @Autowired
+    @Resource
     private TransactionDao dataDao;
-    @Autowired
+    @Resource
     private AccountService accountService;
-    @Autowired
+    @Resource
     private ProcessNotificationService notificationService;
 
     private final static Logger logger =
@@ -41,9 +40,8 @@ public class Bill99NotificationResource {
 
 
     @SuppressWarnings("unchecked")
-    @POST
-    @Path("/notifications")
-    public Response processNotification(@Context HttpServletRequest request) {
+    @RequestMapping(value = "/notifications", method = RequestMethod.POST, produces = APPLICATION_XML_VALUE)
+    public String processNotification(HttpServletRequest request) {
         Map<String, String> params = parseRequest(request);
         logger.info("begin process 99bill notifications");
         String notifyData = LogUtils.getMapContent(params);
@@ -82,8 +80,7 @@ public class Bill99NotificationResource {
                 HttpUtils.getServletRootUrl(request).concat(PaymentConstant.GENERAL_RETURN_PROXY_PATH).
                         concat("?transId=").concat(transId.toString()));
         logger.info("response to 99bill: " + return_msg);
-        return Response.status(Response.Status.OK).entity(return_msg).
-                type(MediaType.APPLICATION_XML_TYPE).build();
+        return return_msg;
     }
 
 

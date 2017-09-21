@@ -11,37 +11,33 @@ import org.klose.payment.service.notification.ProcessNotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-@Path("payment/alipay")
-@Component
+@RequestMapping(value="payment/alipay")
+@RestController
 public class AliPayNotificationResource {
 
-    @Autowired
+    @Resource
     private ProcessNotificationService notificationService;
-    @Autowired
+    @Resource
     private TransactionDao dataDao;
-    @Autowired
+    @Resource
     private AccountService accountService;
 
     private final static Logger logger = LoggerFactory
             .getLogger(AliPayNotificationResource.class);
 
-    @POST
-    @Path("/notifications")
-    @Consumes("application/x-www-form-urlencoded")
-    public Response createNotification(@Context HttpServletRequest request)
+    @RequestMapping(value = "/notifications", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String createNotification(HttpServletRequest request)
             throws UnsupportedEncodingException {
         Assert.isNotNull(request);
         Map<String, String> params = this.parseRequest(request);
@@ -86,7 +82,7 @@ public class AliPayNotificationResource {
 
             notificationService.handlePaymentCallback(orderNo, notifyData,
                     payId, tradeStatus, notifyMap);
-            return Response.ok("success", MediaType.TEXT_HTML).build();
+            return "success";
         } else {
             notificationService.handlePaymentCallback(orderNo, notifyData,
                     null, "verification failed", notifyMap);
@@ -164,5 +160,10 @@ public class AliPayNotificationResource {
         logger.trace("built notify map : {}",
                 LogUtils.getMapContent(params));
         return map;
+    }
+
+    @RequestMapping(value = "/health", method = RequestMethod.GET)
+    public String health() {
+        return "alipay notifications service is running";
     }
 }
