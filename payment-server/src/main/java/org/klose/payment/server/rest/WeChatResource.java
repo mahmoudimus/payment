@@ -63,9 +63,9 @@ public class WeChatResource {
         builder.append("?bizNo=").append(bizNo);
         builder.append("&accountNo=").append(accountNo);
 
-        if(bizType != null)
+        if (bizType != null)
             builder.append("&bizType=").append(bizType);
-        if(returnURL != null ) {
+        if (returnURL != null) {
             returnURL = returnURL.replaceAll("#!", ";");
             builder.append("&returnURL=").append(returnURL);
         }
@@ -113,7 +113,7 @@ public class WeChatResource {
         String bizType = request.getParameter("bizType");
         String returnURL = request.getParameter("returnURL");
 
-        if(returnURL != null)
+        if (returnURL != null)
             returnURL = returnURL.replaceAll(";", "#!");
 
         logger.trace("bizNo = {}, bizType = {}, returnURL = {}", bizNo,
@@ -126,7 +126,9 @@ public class WeChatResource {
         orderDto.setReturnURL(returnURL);
 
         logger.debug("[initialized orderDto = {} ]", orderDto);
-        return payResource.createPayment(response, request, orderDto);
+        //@TODO
+        return null;
+        //return payResource.createPayment(response, request, orderDto);
     }
 
 }

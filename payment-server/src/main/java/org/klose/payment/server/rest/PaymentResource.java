@@ -23,10 +23,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Map;
 
 import static org.klose.payment.constant.PaymentConstant.REDIRECT_PREFIX;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 
 @RequestMapping(value = "/payment")
 @RestController
@@ -41,7 +41,7 @@ public class PaymentResource {
     private PaymentProxy paymentProxy;
 
 
-    @RequestMapping(value="/{transactionId}", method=RequestMethod.GET)
+    @RequestMapping(value = "/{transactionId}", method = RequestMethod.GET)
     public PaymentResult queryPayment(@PathVariable("transactionId") Long transactionId) {
         return paymentProxy
                 .queryPayment(transactionId);
@@ -57,10 +57,10 @@ public class PaymentResource {
      * @param orderDto order form
      * @return payment form
      */
-    @RequestMapping(value="/create", method = RequestMethod.POST,
-            consumes = APPLICATION_JSON_VALUE, produces = TEXT_HTML_VALUE)
-    public ModelAndView createPayment(HttpServletResponse response,
-                              HttpServletRequest request, @RequestBody OrderDto orderDto) {
+    @RequestMapping(value = "/create", method = RequestMethod.POST,
+            consumes = APPLICATION_JSON_VALUE)
+    public Map<String, Object> createPayment(HttpServletResponse response,
+                                             HttpServletRequest request, @RequestBody OrderDto orderDto) {
         Assert.isNotNull(orderDto);
         Assert.isNotNull(orderDto.getAccountNo());
         Assert.isNotNull(orderDto.getBizNo());
@@ -82,7 +82,7 @@ public class PaymentResource {
             redirectPaymentForm(response, paymentForm.getForwardURL());
             return null;
         } else
-            return this.createPaymentView(paymentForm);
+            return this.createPaymentView(paymentForm).getModelMap();
     }
 
     private BillingData preparePayment(HttpServletRequest request, OrderDto orderDto) {
@@ -180,7 +180,8 @@ public class PaymentResource {
 
         logger.debug("forward view data : {} \n", paymentForm);
 
-        ModelAndView  view = new ModelAndView(paymentForm.getForwardURL());
+        //ModelAndView  view = new ModelAndView(paymentForm.getForwardURL());
+        ModelAndView view = new ModelAndView("http://localhost");
         //@TODO rename
         view.getModelMap().put("model", paymentForm.getParams());
         view.getModelMap().put("returnURL", paymentForm.getReturnURL());
@@ -192,7 +193,7 @@ public class PaymentResource {
 
     @RequestMapping(value = "/return", method = RequestMethod.GET)
     public String redirect2ReturnUrl(
-             HttpServletRequest request) throws URISyntaxException {
+            HttpServletRequest request) throws URISyntaxException {
         String transIdVal = request.getParameter("transId");
         logger.debug("[transId = {}", transIdVal);
         Assert.isNotNull(transIdVal);
