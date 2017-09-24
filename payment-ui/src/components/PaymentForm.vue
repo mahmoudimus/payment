@@ -10,17 +10,26 @@
 </template>
 
 <script>
-import { checkHealth } from '../api/api.js'
+import { createPayment } from '../api/api.js'
 export default {
   name: 'PaymentForm',
   data () {
     return {
+      bizNo: '',
+      accountNo: '',
       msg: '2'
     }
   },
   methods: {
     submitPay () {
-      checkHealth().then(res => {
+      let order = {
+        'bizNo': this.bizNo,
+        'accountNo': this.accountNo,
+        'bizType': 'NB',
+        'returnURL': null
+      }
+
+      createPayment(order).then(res => {
         console.log(res.data)
         this.msg = res.data
         return

@@ -1,6 +1,6 @@
 import axios from 'axios'
 const PAYMENT_URL = '/api/payment'
 
-export const checkHealth = () => {
-  return axios.get(PAYMENT_URL.concat('/health'))
+export const createPayment = (params) => {
+  return axios.post(PAYMENT_URL.concat('/create'), params)
 }
