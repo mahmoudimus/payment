@@ -8,44 +8,39 @@ import org.klose.payment.common.utils.Assert;
 import org.klose.payment.common.utils.JSONHelper;
 import org.klose.payment.common.utils.LogUtils;
 import org.klose.payment.common.utils.XMLUtils;
+import org.klose.payment.common.utils.sign.MD5Util;
 import org.klose.payment.dao.AccountDao;
 import org.klose.payment.dao.TransactionDao;
 import org.klose.payment.integration.wechat.constant.WeChatConstant;
 import org.klose.payment.po.AccountPO;
 import org.klose.payment.po.TransactionPO;
-import org.klose.payment.service.AccountService;
 import org.klose.payment.service.notification.ProcessNotificationService;
-import org.klose.payment.common.utils.sign.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-@Path("payment/wechat")
-@Component
+import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
+
+@RequestMapping(value = "payment/wechat")
+@RestController
 public class WechatNotificationResources {
 
-    @Autowired
-    AccountService accountService;
+    @Resource
+    private AccountDao accountDao;
 
-    @Autowired
-    AccountDao accountDao;
+    @Resource
+    private TransactionDao transactionDao;
 
-    @Autowired
-    TransactionDao transactionDao;
-
-    @Autowired
-    ProcessNotificationService notificationService;
+    @Resource
+    private ProcessNotificationService notificationService;
 
 
     private final static String WECHAT_RESPONSE_MSG =
@@ -54,9 +49,9 @@ public class WechatNotificationResources {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @SuppressWarnings("unchecked")
-    @POST
-    @Path("/notification")
-    public Response handlePaymentCallback(@Context HttpServletRequest request) {
+
+    @RequestMapping(value = "/notification", method = RequestMethod.POST, produces = APPLICATION_XML_VALUE)
+    public String handlePaymentCallback(HttpServletRequest request) {
 
         String encoding = request.getCharacterEncoding();
         Map<String, String> params = parseRequestData(request);
@@ -88,8 +83,7 @@ public class WechatNotificationResources {
                     orderNo, notifyData, notifyParams.get("transaction_id"), "", null);
         }
 
-        String return_msg = String.format(WECHAT_RESPONSE_MSG, paymentResult);
-        return Response.status(Response.Status.OK).entity(return_msg).type(MediaType.APPLICATION_XML_TYPE).build();
+        return String.format(WECHAT_RESPONSE_MSG, paymentResult);
     }
 
     private Map parseRequestData(HttpServletRequest request) {

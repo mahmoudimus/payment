@@ -1,15 +1,9 @@
 package org.klose.payment.server.rest.model;
 
-import javax.ws.rs.FormParam;
-
 public class OrderDto {
-	@FormParam("accountNo")
 	private String accountNo;
-	@FormParam("bizNo")
 	private String bizNo;
-	@FormParam("bizType")
 	private String bizType;
-	@FormParam("returnURL")
 	private String returnURL;
 
 	public String getAccountNo() {

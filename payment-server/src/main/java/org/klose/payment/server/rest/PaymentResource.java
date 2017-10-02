@@ -1,8 +1,6 @@
 package org.klose.payment.server.rest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jboss.resteasy.annotations.Form;
-import org.jboss.resteasy.plugins.providers.html.View;
 import org.klose.payment.api.PaymentProxy;
 import org.klose.payment.bo.*;
 import org.klose.payment.common.context.ApplicationContextUtils;
@@ -12,43 +10,39 @@ import org.klose.payment.constant.FrontPageForwardType;
 import org.klose.payment.constant.PaymentConstant;
 import org.klose.payment.constant.PaymentType;
 import org.klose.payment.integration.wechat.constant.WeChatConstant;
+import org.klose.payment.server.prepare.PaymentIntegrationService;
 import org.klose.payment.server.rest.model.OrderDto;
 import org.klose.payment.service.PaymentExtensionConfService;
-import org.klose.payment.server.prepare.PaymentIntegrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Map;
 
-@Path("/payment")
-@Component
+import static org.klose.payment.constant.PaymentConstant.REDIRECT_PREFIX;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
+@RequestMapping(value = "/payment")
+@RestController
 public class PaymentResource {
 
     private final static Logger logger = LoggerFactory.getLogger(PaymentResource.class);
 
-    @Autowired
+    @Resource
     private PaymentExtensionConfService paymentExtensionService;
 
-    @Autowired
+    @Resource
     private PaymentProxy paymentProxy;
 
 
-    @GET
-    @Path("/{transactionId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public PaymentResult queryPayment(@Context HttpServletResponse response,
-                                      @Context HttpServletRequest request,
-                                      @PathParam("transactionId") Long transactionId) {
+    @RequestMapping(value = "/{transactionId}", method = RequestMethod.GET)
+    public PaymentResult queryPayment(@PathVariable("transactionId") Long transactionId) {
         return paymentProxy
                 .queryPayment(transactionId);
     }
@@ -63,12 +57,10 @@ public class PaymentResource {
      * @param orderDto order form
      * @return payment form
      */
-    @POST
-    @Path("/create")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces("text/html")
-    public View createPayment(@Context HttpServletResponse response,
-                              @Context HttpServletRequest request, @Form OrderDto orderDto) {
+    @RequestMapping(value = "/create", method = RequestMethod.POST,
+            consumes = APPLICATION_JSON_VALUE)
+    public Map<String, Object> createPayment(HttpServletResponse response,
+                                             HttpServletRequest request, @RequestBody OrderDto orderDto) {
         Assert.isNotNull(orderDto);
         Assert.isNotNull(orderDto.getAccountNo());
         Assert.isNotNull(orderDto.getBizNo());
@@ -90,7 +82,7 @@ public class PaymentResource {
             redirectPaymentForm(response, paymentForm.getForwardURL());
             return null;
         } else
-            return this.createPaymentView(paymentForm);
+            return this.createPaymentView(paymentForm).getModelMap();
     }
 
     private BillingData preparePayment(HttpServletRequest request, OrderDto orderDto) {
@@ -139,7 +131,7 @@ public class PaymentResource {
         data.setReturnURL(returnURL);
 
         //special handle for wechat js api
-        if(accountInfo.getType().equals(PaymentType.WX_JSAPI)) {
+        if (accountInfo.getType().equals(PaymentType.WX_JSAPI)) {
             data.addExtData(WeChatConstant.KEY_WEIXIN_PRODUCT_ID, "test product");
             data.addExtData(WeChatConstant.KEY_WEIXIN_OPENID, request.getAttribute(WeChatConstant.KEY_WEIXIN_OPENID));
         }
@@ -179,7 +171,7 @@ public class PaymentResource {
         }
     }
 
-    private View createPaymentView(PaymentForm paymentForm) {
+    private ModelAndView createPaymentView(PaymentForm paymentForm) {
         Assert.isNotNull(paymentForm);
         Assert.isNotNull(paymentForm.getForwardURL());
         Assert.isNotNull(paymentForm.getParams());
@@ -188,7 +180,8 @@ public class PaymentResource {
 
         logger.debug("forward view data : {} \n", paymentForm);
 
-        View view = new View(paymentForm.getForwardURL());
+        //ModelAndView  view = new ModelAndView(paymentForm.getForwardURL());
+        ModelAndView view = new ModelAndView("http://localhost");
         //@TODO rename
         view.getModelMap().put("model", paymentForm.getParams());
         view.getModelMap().put("returnURL", paymentForm.getReturnURL());
@@ -198,19 +191,21 @@ public class PaymentResource {
         return view;
     }
 
-    @GET
-    @Path("/return")
-    public Response redirect2ReturnUrl(
-            @Context HttpServletRequest request,
-            @Context HttpServletResponse response) throws URISyntaxException {
+    @RequestMapping(value = "/return", method = RequestMethod.GET)
+    public String redirect2ReturnUrl(
+            HttpServletRequest request) throws URISyntaxException {
         String transIdVal = request.getParameter("transId");
         logger.debug("[transId = {}", transIdVal);
         Assert.isNotNull(transIdVal);
         String returnURL = paymentProxy.findReturnUrl(Long.valueOf(transIdVal)).concat("?transId=").concat(transIdVal);
         Assert.isNotNull(returnURL);
         logger.trace("returnURL = {}", returnURL);
-        return Response.temporaryRedirect(new URI(returnURL)).build();
+        return REDIRECT_PREFIX.concat(returnURL);
     }
 
+    @RequestMapping(value = "/health", method = RequestMethod.GET)
+    public String health() {
+        return "payment service is running";
+    }
 
 }

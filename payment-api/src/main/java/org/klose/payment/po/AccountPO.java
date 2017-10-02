@@ -15,34 +15,34 @@ public class AccountPO implements Serializable {
 	@Id
 	private Long id;
 	
-	@Column
+	@Column(name="accountNo")
 	@Index(name = "accountNo")
 	private String accountNo;
 	
-	@Column
+	@Column(name="name")
 	private String name;
 	
-	@Column
+	@Column(name="type")
 	private Integer type;
 	
-	@Column
+	@Column(name="useType")
 	private Integer useType;
 	
-	@Column
+	@Column(name="gatewayURL")
 	private String gatewayURL;
 
-	@Column(nullable = false)
+	@Column(name="configData", nullable = false)
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	private String configData;
 
-	@Column
+	@Column(name="merchantNo")
 	private String merchantNo;
 	
-	@Column
+	@Column(name="merchantName")
 	private String merchantName;
 	
-	@Column
+	@Column(name="processBean")
 	private String processBean;
 	
 	@Column(name = "status")

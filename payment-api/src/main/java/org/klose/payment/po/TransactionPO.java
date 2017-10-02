@@ -17,52 +17,52 @@ public class TransactionPO implements Serializable {
 	@Id
 	private Long id;
 
-	@Column
+	@Column(name="accountNo")
 	private String accountNo;
 
 	@Column(name = "orderNo")
 	@Index(name = "orderNo")
 	private String transactionNo;
 
-	@Column
+	@Column(name="bizNo")
 	private String bizNo;
 
-	@Column
+	@Column(name="subject")
 	private String subject;
 
-	@Column
+	@Column(name="amount")
 	private BigDecimal amount;
 
-	@Column
+	@Column(name="prePayId")
 	private String prePayId;
 
-	@Column
+	@Column(name="payId")
 	private String payId;
 
-	@Column
+	@Column(name="callBackAgent")
 	private String callBackAgent;
 
-	@Column
+	@Column(name="status")
 	private Integer status;
 
-	@Column(nullable = false)
+	@Column(name="messageLog", nullable = true)
 	@Lob
-	@Basic(fetch = FetchType.LAZY)
+//	@Basic(fetch = FetchType.LAZY)
 	private String messageLog;
 
-	@Column
+	@Column(name="creation_time")
 	private Date creation_time;
 
-	@Column
+	@Column(name="completion_time")
 	private Date completion_time;
 
-	@Column
+	@Column(name="currency")
 	private String currency;
 
-	@Column
+	@Column(name="notificationMsg")
 	private String notificationMsg;
 	
-	@Column
+	@Column(name="returnURL")
 	private String returnURL;
 
 	public Long getId() {

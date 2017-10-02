@@ -13,16 +13,16 @@ public class PaymentExtensionConfPO implements Serializable {
 	@Id
 	private Long id;
 
-	@Column
+	@Column(name="accountType")
 	private Integer accountType;
 
-	@Column
+	@Column(name="prepareBillingDataBean")
 	private String prepareBillingDataBean;
 
-	@Column
+	@Column(name="processPaymentCallbackBean")
 	private String processPaymentCallbackBean;
 
-	@Column
+	@Column(name="bizType")
 	private String bizType;
 
 	public Long getId() {
