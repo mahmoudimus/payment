@@ -32,7 +32,7 @@ public class MockPaymentIntegrationTest {
 
 
     @Test
-    public void createBillingData() throws Exception {
+    public void createBillingData() {
         String bizNo = UUID.randomUUID().toString();
         BillingData data = service.prepareBillingData(bizNo);
         Assert.assertNotNull(data);
