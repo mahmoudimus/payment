@@ -18,12 +18,12 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>5.2.8.RELEASE</spring.version>
-        <spring.data.version>1.11.23.RELEASE</spring.data.version>
-        <spring.boot.version>1.2.7.RELEASE</spring.boot.version>
+        <spring.data.version>2.3.3.RELEASE</spring.data.version>
+        <spring.boot.version>2.3.3.RELEASE</spring.boot.version>
         <spring.security.version>5.3.4.RELEASE</spring.security.version>
-        <aspectj.version>1.8.7</aspectj.version>
-        <slf4j.version>1.7.5</slf4j.version>
-        <logback.version>1.0.9</logback.version>
+        <aspectj.version>1.9.6</aspectj.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <logback.version>1.2.3</logback.version>
         <resteasy.version>3.0.11.Final</resteasy.version>
     </properties>
 

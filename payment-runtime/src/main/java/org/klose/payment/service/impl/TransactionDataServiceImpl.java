@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.klose.payment.service.impl;
 
 import org.klose.payment.bo.BillingData;
@@ -18,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * @author gary.chang
@@ -51,8 +49,9 @@ public class TransactionDataServiceImpl implements TransactionDataService {
         PaymentResult result = null;
 
         if (transId != null) {
-            TransactionPO po = transactionDao.findOne(transId);
-            result = convertToPaymentResult(po);
+            Optional<TransactionPO> po = transactionDao.findById(transId);
+            if (po.isPresent())
+                result = convertToPaymentResult(po.get());
         }
 
         return result;
@@ -114,11 +113,13 @@ public class TransactionDataServiceImpl implements TransactionDataService {
             return null;
         }
 
-        String result = returnURL;
-
-        TransactionPO entity = transactionDao.findOne(transId);
-        entity.setReturnURL(result);
-        transactionDao.save(entity);
+        String result = null;
+        TransactionPO entity = transactionDao.findById(transId).orElse(null);
+        if (entity != null) {
+            result = returnURL;
+            entity.setReturnURL(result);
+            transactionDao.save(entity);
+        }
 
         return result;
     }
@@ -146,20 +147,19 @@ public class TransactionDataServiceImpl implements TransactionDataService {
             Long transId, boolean isSuccess, String payId, String notifyMsg) {
 
         if (transId != null) {
-            TransactionPO entity = transactionDao.findOne(transId);
+            TransactionPO entity = transactionDao.findById(transId).orElse(null);
+            if (entity != null) {
+                entity.setStatus(isSuccess ?
+                        PaymentStatus.Success.getStatusId() :
+                        PaymentStatus.Failed.getStatusId());
 
-            entity.setStatus(isSuccess ?
-                    PaymentStatus.Success.getStatusId() :
-                    PaymentStatus.Failed.getStatusId());
+                entity.setPayId(payId != null ? payId : "");
 
-            entity.setPayId(payId != null ? payId : "");
+                entity.setCompletion_time(new Date());
+                entity.setNotificationMsg(notifyMsg);
 
-            entity.setCompletion_time(new Date());
-            entity.setNotificationMsg(notifyMsg);
-
-            transactionDao.save(entity);
+                transactionDao.save(entity);
+            }
         }
-
-        return;
     }
 }
