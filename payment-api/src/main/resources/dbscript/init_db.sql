@@ -40,7 +40,7 @@ VALUES
   (2, 'ALIPAY01', 'ebaocloud-Alipay01', 3, 1, 'https://mapi.alipay.com/gateway.do',
       '{ "partner": "2088121231409386", "sellerMail": "fi@anyi-tech.com", "securityKey": "t5j69s9sg36o3txnjzs7l3gv0pwga4lx" }',
       '02', 'anyi', 'aliGateWayPaymentService', 1, NULL, NULL, NULL, NULL);
-INSERT INTO `t_payment_account` (`id`, `accountNo`, `name`, `type`, `useType`, `gatewayURL`, `configData`, `merchantNo`, `merchantName`, `processBean`, `status`, `created_by`, `creation_time`, `modification_time`, `modified_by`, `displayOrder`) VALUES (3, '99BILL01', '99BILL01', 5, 1, 'https://sandbox.99bill.com/gateway/recvMerchantInfoAction.htm', '{\r\n    "merchantAcctId": "1001213884201",\r\n    "publicKeyPath": "/bill99/bill99.cert.rsa.20340630.cer",\r\n    "privateKeyPath": "/bill99/tester-rsa.pfx",\r\n    "privateKeyPassword": "123456"\r\n}', '03', 'test', 'bill99PaymentService', 1, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `t_payment_account` (`id`, `accountNo`, `name`, `type`, `useType`, `gatewayURL`, `configData`, `merchantNo`, `merchantName`, `processBean`, `status`, `created_by`, `creation_time`, `modification_time`, `modified_by`) VALUES (3, '99BILL01', '99BILL01', 5, 1, 'https://sandbox.99bill.com/gateway/recvMerchantInfoAction.htm', '{\r\n    "merchantAcctId": "1001213884201",\r\n    "publicKeyPath": "/bill99/bill99.cert.rsa.20340630.cer",\r\n    "privateKeyPath": "/bill99/tester-rsa.pfx",\r\n    "privateKeyPassword": "123456"\r\n}', '03', 'test', 'bill99PaymentService', 1, NULL, NULL, NULL, NULL );
 
 
 CREATE TABLE IF NOT EXISTS `t_payment_ext_conf` (
