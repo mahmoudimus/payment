@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-import static org.springframework.util.MimeTypeUtils.APPLICATION_FORM_URLENCODED_VALUE;
 import static org.springframework.util.MimeTypeUtils.TEXT_HTML_VALUE;
 
 @RequestMapping(value = "/wechat")
@@ -39,8 +38,7 @@ public class WeChatResource {
     private final static String WECHAT_OAUTH_URL = "/api/wechat/createWeChatPayment";
 
     @RequestMapping(value = "/oauth", method = RequestMethod.POST)
-    public String oauth(HttpServletRequest request, @RequestBody OrderDto orderDto)
-            throws Exception {
+    public String oauth(HttpServletRequest request, @RequestBody OrderDto orderDto) {
         Assert.isNotNull(orderDto);
         logger.info("start oauth wechat");
         logger.debug("[orderDto : {}]", orderDto);
@@ -78,8 +76,7 @@ public class WeChatResource {
         return PaymentConstant.REDIRECT_PREFIX.concat(redirectUrl);
     }
 
-    @RequestMapping(value = "/createWeChatPayment", method = RequestMethod.GET,
-            consumes = APPLICATION_FORM_URLENCODED_VALUE, produces = TEXT_HTML_VALUE)
+    @RequestMapping(value = "/createWeChatPayment", method = RequestMethod.GET, produces = TEXT_HTML_VALUE)
     public ModelAndView createWeChatPayment(HttpServletResponse response,
                                             HttpServletRequest request) {
         Assert.isNotNull(request);

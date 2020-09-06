@@ -8,9 +8,9 @@ import org.klose.payment.constant.PaymentConstant;
 import org.klose.payment.server.prepare.PaymentIntegrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -19,8 +19,8 @@ import java.util.UUID;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:application-context.xml"})
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
-@Transactional
+@Transactional(transactionManager = "transactionManager")
+@Commit
 public class MockPaymentIntegrationTest {
 
     @Resource(name = "mockPaymentIntegtationService")
@@ -32,7 +32,7 @@ public class MockPaymentIntegrationTest {
 
 
     @Test
-    public void createBillingData() throws Exception {
+    public void createBillingData() {
         String bizNo = UUID.randomUUID().toString();
         BillingData data = service.prepareBillingData(bizNo);
         Assert.assertNotNull(data);
